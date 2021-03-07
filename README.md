@@ -1,2 +1,2 @@
 # Compra-Venta
-Crypto currency value prediction website backend
+Virtual Crypto Currency Trading platform with price predictions. (backend)
