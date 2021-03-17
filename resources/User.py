@@ -3,6 +3,7 @@ from flask_restful import Resource, Api, reqparse
 from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
+from utils.encryption import key, encrypt_password, decrypt_password
 from models.User import User
 
 class RegisterUser(Resource):
@@ -38,7 +39,7 @@ class RegisterUser(Resource):
     def post(self):
         data = self.parser.parse_args()
         email = data['email']
-        password = data['password']
+        password = encrypt_password(data['password'])
         name = data['name']
         age = data['age']
         country = data['country']
@@ -74,10 +75,10 @@ class UserLogin(Resource):
         password = data['password']
         result, _id = User.find_by_email(email)
         if  result == None:
-            return {"message": "Email id not found"}, 404
+            return {"error": "Email id not found"}, 404
         else:
-            if result.password != password:
-                return {"message": "invalid credentials"}, 401 
+            if decrypt_password(result.password) != password:
+                return {"error": "invalid credentials"}, 401 
             else:
                 access_token = create_access_token(identity = _id,fresh = True)
                 refresh_token = create_refresh_token(_id)
@@ -113,12 +114,12 @@ class UpdatePassword(Resource):
     def post(self):
         data = self.parser.parse_args()
         email = data['email']
-        new_password = data['new_password']
-        password = data['password']
+        new_password = encrypt_password(data['new_password'])
+        password = (data['password'])
         user, _id = User.find_by_email(email)
         if(user == None):
             return {"error":"User does not exists"}, 400
-        if user.password != password:
+        if decrypt_password(user.password) != password:
             return {"error": "Invalid credentials"}, 400
         try:
             done = user.update_password(new_password, _id)

@@ -25,7 +25,6 @@ class Pnomics(Thread):
             url = "https://api.nomics.com/v1/currencies/ticker?key=9e4daddd8f3bf33f45eeba5fe9021b2f&ids=BTC,ETH&interval=1d,30d&convert=USD&per-page=100&page=1"
             try:
                 data = eval(urllib.request.urlopen(url).read())
-                # data = 'hello'
             except:
                 pass
             i+=1
