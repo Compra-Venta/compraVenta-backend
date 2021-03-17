@@ -5,6 +5,8 @@ from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from utils.encryption import key, encrypt_password, decrypt_password
 from models.User import User
+from utils.recovery_email import send_recovery_email
+from utils.password_generator import generate_password
 
 class RegisterUser(Resource):
     parser = reqparse.RequestParser()
@@ -124,6 +126,32 @@ class UpdatePassword(Resource):
         try:
             done = user.update_password(new_password, _id)
             if done:
+                return {"message": "Password changed successfully."}, 200
+            else:
+                return {"error": "Some error occured"}, 500
+        except:
+            return {"error": "Some error occured"}, 500
+
+class ForgotPassword(Resource):
+
+    parser = reqparse.RequestParser()
+    parser.add_argument('email',
+                        type = str,
+                        required = True
+                        )
+
+    def put(self):
+        data = self.parser.parse_args()
+        email = data['email']
+        new_password = generate_password()
+        encrypted_pass = encrypt_password(new_password)
+        user, _id = User.find_by_email(email)
+        if(user == None):
+            return {"error":"User does not exists"}, 400
+        try:
+            done = user.update_password(encrypted_pass, _id)
+            if done:
+                send_recovery_email(email, user.name, new_password)
                 return {"message": "Password changed successfully."}, 200
             else:
                 return {"error": "Some error occured"}, 500

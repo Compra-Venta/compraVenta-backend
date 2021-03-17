@@ -3,12 +3,12 @@ import smtplib, ssl
 
 def send_email(email, name, new_password):
 
-    query_email = "dakshverma.verma@gmail.com"
+    query_email = "teamcompraventa@gmail.com"
     port = 587  # For starttls
     smtp_server = "smtp.gmail.com"
-    sender_email = "dakshverma.verma@gmail.com"
+    sender_email = "teamcompraventa@gmail.com"
     receiver_email = "dakshverma.bt19cse@pec.edu.in"
-    password = "Daksh@2001"
+    password = "compraventa@pec"
     message = f"""\
     Subject: Password recovery.
 

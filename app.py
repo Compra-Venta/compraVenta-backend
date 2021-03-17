@@ -5,7 +5,7 @@ from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 from models.User import User
-from resources.User import RegisterUser, UserLogin, RefreshLogin, UpdatePassword
+from resources.User import RegisterUser, UserLogin, RefreshLogin, UpdatePassword, ForgotPassword
 from threading import Thread 
 import urllib.request
 import time
@@ -31,8 +31,8 @@ class Pnomics(Thread):
             time.sleep(10)
 
 
-t1 = Pnomics()
-t1.start()
+# t1 = Pnomics()
+# t1.start()
 
 class Exchange(Resource):
     
@@ -51,7 +51,8 @@ api.add_resource(RegisterUser, '/register')
 api.add_resource(UserLogin, '/login')
 api.add_resource(RefreshLogin, '/reauth')
 api.add_resource(Item, '/item')
-api.add_resource(UpdatePassword, '/change-password')
-api.add_resource(Exchange,'/data')
+api.add_resource(UpdatePassword, '/password/change')
+# api.add_resource(Exchange,'/data')
+api.add_resource(ForgotPassword,'/password/get_new')
 if __name__ == '__main__':
     app.run(debug = True)
