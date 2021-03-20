@@ -103,6 +103,29 @@ class TransactionClosed:
             return None
 
     @classmethod
+    def get_transactions_by_symbol(cls,email, symbol):
+        client = MongoClient('localhost', 27017)
+        db = client['test-user-db-compra-venta']
+        collection = db['test-transaction-closed-collection']
+        result = None
+
+        try:
+            result = collection.find_one({'email':email})
+            if result == None:
+                return None
+            transaction_list = list(result['transaction_list'])
+            client.close()
+            ans = []
+            for d in transaction_list:
+                if d['pair'] == symbol:
+                    ans.append(d)
+            return ans
+                
+        except:
+            client.close()
+            return None
+
+    @classmethod
     def reset_account(cls,email):
         client = MongoClient('localhost', 27017)
         db = client['test-user-db-compra-venta']
