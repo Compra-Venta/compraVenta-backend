@@ -1,7 +1,6 @@
 import pymongo
 from pymongo import MongoClient
 from bson.objectid import ObjectId
-from pprint import pprint
 
 class User:
         def __init__(self,email, password, name, age, country, balance):
