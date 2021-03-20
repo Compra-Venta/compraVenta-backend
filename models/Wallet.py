@@ -22,18 +22,16 @@ class Wallet:
 		#post in the form of json/dictionary.
 
 		post={
-
-			'email':email
+			'email':email,
 			'data':data
-
 		}
 
 		client.close()
 
 		try:
 			collection.insert_one(post)
-			
 			return True
+
 		except:
 			return False
 
