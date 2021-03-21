@@ -2,7 +2,7 @@ import smtplib, ssl
 
 
 def send_email(email, name, new_password):
-
+    
     query_email = "teamcompraventa@gmail.com"
     port = 587  # For starttls
     smtp_server = "smtp.gmail.com"
