@@ -111,14 +111,14 @@ class Wallet:
 		user_value={'$set':{base_asset:amount1}}
 
 		user_value1={'$set':{quote_asset:amount2}}
-		
-		try:
-			collection.update(user_key,user_value)
-			collection.update(user_key,user_value1)
-			
+		if amount1>0 and amount2>0:
+			try:
+				collection.update(user_key,user_value)
+				collection.update(user_key,user_value1)
+				
 
-		except:
-			return None
+			except:
+				return None
 
 
 
