@@ -10,6 +10,8 @@ from models.TransactionClosed import TransactionClosed
 def is_transaction_possible(email,pair,order_type,side, q_amount, b_amount):
     return True
 
+
+# /transaction/all
 class TransactionList(Resource):
 
     parser = reqparse.RequestParser()
@@ -29,7 +31,7 @@ class TransactionList(Resource):
         else:
             return {"error":"cant find the user"}, 400 
     
-
+# /transaction/date?date=2021-07-11
 class TransactionByDate(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument(
@@ -50,7 +52,7 @@ class TransactionByDate(Resource):
         else:
             return {'error':'some error'}, 400
 
-
+# /transaction/symbol?symbol=LTCBTC
 class TransactionBySymbol(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument(
@@ -71,7 +73,7 @@ class TransactionBySymbol(Resource):
         else:
             return {'error':'some error'}, 400
 
-
+# transaction/add
 class AddTransaction(Resource):
 
     parser = reqparse.RequestParser()
