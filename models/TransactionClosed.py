@@ -79,6 +79,8 @@ class TransactionClosed:
 
         try:
             result = collection.find_one({'email':email})
+            if result == None:
+                return None
             transaction_list = list(result['transaction_list'])
             client.close()
             found = False
