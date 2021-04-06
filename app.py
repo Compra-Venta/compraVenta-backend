@@ -6,6 +6,7 @@ from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 from models.User import User
 from resources.User import RegisterUser, UserLogin, RefreshLogin, UpdatePassword, ForgotPassword
+from resources.Prediction import Predict
 from threading import Thread 
 import urllib.request
 import time
@@ -52,7 +53,8 @@ api.add_resource(UserLogin, '/login')
 api.add_resource(RefreshLogin, '/reauth')
 api.add_resource(Item, '/item')
 api.add_resource(UpdatePassword, '/password/change')
-# api.add_resource(Exchange,'/data')
+api.add_resource(Predict,'/predict')
 api.add_resource(ForgotPassword,'/password/get_new')
 if __name__ == '__main__':
     app.run(debug = True)
+
