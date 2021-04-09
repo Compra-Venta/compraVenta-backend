@@ -29,17 +29,11 @@ class add_symbol_to_watchlist(Resource):
         type = str,
         required = True
     )
-    parser.add_argument(
-        'symbol',
-        type = str,
-        required = True
-    )
 
     @jwt_required()
-    def post(self):
+    def post(self, symbol):
         data = self.parser.parse_args()
         email = data['email']
-        symbol = data['symbol']
         result = Watchlist.add_symbol(email,symbol)
         if result == 1:
             return {'message':'symbol added to watchlist'}, 201
@@ -55,17 +49,11 @@ class remove_symbol_from_watchlist(Resource):
         type = str,
         required = True
     )
-    parser.add_argument(
-        'symbol',
-        type = str,
-        required = True
-    )
 
     @jwt_required()
-    def delete(self):
+    def delete(self,symbol):
         data = self.parser.parse_args()
         email = data['email']
-        symbol = data['symbol']
         result = Watchlist.remove_symbol(email,symbol)
         if result == 1:
             return {'message':'symbol removed from watchlist'}, 201

@@ -5,6 +5,7 @@ from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from utils.encryption import key, encrypt_password, decrypt_password
 from models.User import User
+from models.Watchlist import Watchlist 
 from utils.recovery_email import send_recovery_email
 from utils.password_generator import generate_password
 
@@ -34,8 +35,8 @@ class RegisterUser(Resource):
                         required = True
                         )
 
-    parser.add_argument('balance',
-                        type = float,
+    parser.add_argument('PhoneNo',
+                        type = int,
                         required = True
                         )
     def post(self):
@@ -45,17 +46,17 @@ class RegisterUser(Resource):
         name = data['name']
         age = data['age']
         country = data['country']
-        balance = data['balance']
+        balance = data['PhoneNo']
         _user, _id = User.find_by_email(email)
         if _user == None:
             user = User(email,password, name, age, country, balance)
             if user.insert():
+                Watchlist.create_user_watchlist(email)
                 return {"message": "registered successfully"}, 200
             else:
                 return {"message": "an error occurred"}, 500
         else:
             return {"message": "Email ID already registered"}, 409
-
 
 
 class UserLogin(Resource):
@@ -157,3 +158,29 @@ class ForgotPassword(Resource):
                 return {"error": "Some error occured"}, 500
         except:
             return {"error": "Some error occured"}, 500
+
+
+class Profile(Resource):
+
+    parser = reqparse.RequestParser()
+    parser.add_argument('email',
+                        type = str,
+                        required = True
+                        )
+    @jwt_required()
+    def get(self):
+        data = self.parser.parse_args()
+        email = data['email']
+        user, _id = User.find_by_email(email)
+        if(user == None):
+            return {"error":"User does not exists"}, 400
+        else:
+            return {
+                "email":user.email,
+                "name":user.name,
+                "age":user.age,
+                "country":user.country,
+                "PhoneNo":user.PhoneNo
+            }, 200
+
+
