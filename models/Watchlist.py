@@ -52,13 +52,13 @@ class Watchlist():
             try:
                 collection.update_one({'email':email},{'$push':{'watchlist':symbol}})
                 client.close()
-                return 2
+                return 1
             except:
                 client.close()
                 return -1
         else:
             client.close()
-            return 1
+            return 2
 
     @classmethod
     def remove_symbol(cls, email, symbol):
@@ -72,13 +72,13 @@ class Watchlist():
             try:
                 collection.update_one({'email':email},{'$pull':{'watchlist':symbol}})
                 client.close()
-                return 2
+                return 1
             except:
                 client.close()
                 return -1
         else:
             client.close()
-            return 1
+            return 2
 
     @classmethod
     def get_all_symbol(cls, email):

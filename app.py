@@ -5,8 +5,9 @@ from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 from models.User import User
-from resources.User import RegisterUser, UserLogin, RefreshLogin, UpdatePassword, ForgotPassword
+from resources.User import RegisterUser, UserLogin, RefreshLogin, UpdatePassword, ForgotPassword, Profile
 from resources.Prediction import Predict
+from resources.Watchlist import get_watchlist, add_symbol_to_watchlist, remove_symbol_from_watchlist
 from threading import Thread 
 import urllib.request
 import time
@@ -50,11 +51,15 @@ class Item(Resource):
 
 api.add_resource(RegisterUser, '/register')
 api.add_resource(UserLogin, '/login')
+api.add_resource(Profile,'/myprofile')
 api.add_resource(RefreshLogin, '/reauth')
 api.add_resource(Item, '/item')
 api.add_resource(UpdatePassword, '/password/change')
 api.add_resource(Predict,'/predict')
 api.add_resource(ForgotPassword,'/password/get_new')
+api.add_resource(get_watchlist,'/watchlist')
+api.add_resource(add_symbol_to_watchlist, '/watchlist/<string:symbol>')
+api.add_resource(remove_symbol_from_watchlist,'/watchlist/<string:symbol>')
 if __name__ == '__main__':
     app.run(debug = True)
 

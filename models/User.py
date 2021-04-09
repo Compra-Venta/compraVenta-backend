@@ -3,13 +3,13 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 
 class User:
-        def __init__(self,email, password, name, age, country, balance):
+        def __init__(self,email, password, name, age, country, PhoneNo):
                 self.email = email
                 self.password = password 
                 self.name = name
                 self.age = age 
                 self.country = country
-                self.balance = balance
+                self.PhoneNo = PhoneNo
         
         @classmethod
         def find_by_email(cls, email):
@@ -21,13 +21,12 @@ class User:
                 result = collection.find_one({'email': email})
                 client.close()
                 if result:
-                        return cls(result['email'], result['password'], result['name'], result['age'], result['country'], result['balance']), str(result['_id'])
+                        return cls(result['email'], result['password'], result['name'], result['age'], result['country'], result['PhoneNo']), str(result['_id'])
                 else:
                         return None, None
 
         
         def insert(self):
-                #method to insert in the database
                 client = MongoClient('localhost', 27017)
                 db = client['test-user-db-compra-venta']
                 collection = db['test-user-collection']
@@ -38,7 +37,7 @@ class User:
                         "name": self.name,
                         "age": self.age,
                         "country": self.country,
-                        "balance": self.balance
+                        "PhoneNo": self.PhoneNo
                 }
 
                 try:
