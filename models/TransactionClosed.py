@@ -3,8 +3,9 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 
 class TransactionClosed:
-    def __init__(self):
-        pass
+    def __init__(self, email, transaction_list):
+        self.email = email
+        self.transaction_list = transaction_list
 
     @classmethod
     def create_transaction_history(cls,email):
@@ -42,6 +43,7 @@ class TransactionClosed:
             'order_type' : order_type,
             'side' : side
         }
+        
         try:
             result = collection.update_one({'email':email},{'$push':{'transaction_list':transaction_element}})
             client.close()
@@ -66,7 +68,7 @@ class TransactionClosed:
             pass
 
         if result != None:  
-            return list(result['transaction_list'])
+            return cls(result['email'], result['transaction_list'])
         else:
             return None
 
@@ -138,12 +140,3 @@ class TransactionClosed:
             return result.matched_count > 0
         except:
             return False
-
-
-
-
-
-        
-    
-
-
