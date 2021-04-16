@@ -2,16 +2,17 @@ import pymongo
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 from models.Wallet_model import Wallet
+from models.OrderStoploss import OrderSL
 
-class TransactionClosed:
+class TransactionOpen:
     def __init__(self):
         pass
 
     @classmethod
-    def create_transaction_history(cls,email):
+    def create_open_transaction_history(cls,email):
         client = MongoClient('localhost', 27017)
         db = client['test-user-db-compra-venta']
-        collection = db['test-transaction-closed-collection']
+        collection = db['test-transaction-open-collection']
         post = {
             'email':email,
             'transaction_list' : []
@@ -29,25 +30,15 @@ class TransactionClosed:
         return True
 
     @classmethod
-    def insert_market(cls, email, base, quote, b_amount, date, time, order_type, side):
-        from utils.StoplossThreads import client
-        price = None
-        try:
-            info = client.get_symbol_ticker(symbol = (base+quote))
-            price = float(info['price'])
-        except:
-            return None, "Internal server error."
-
-        if price is None:
-            return None, "Internal server error."
-            
+    def insert_stoploss(cls, email, base, quote, b_amount, date, time, order_type, side, stop):
+        price = stop
         if side == 'BUY':
-            q_amount = price*b_amount
+            q_amount = price * b_amount
             if Wallet.check_balance(email, quote, q_amount):
                 # Wallet.decrease_balance_currency_amt(email, quote, q_amount)
-                # Wallet.increase_balance_currency_amt(email, base, b_amount)
-                Wallet.do_wallet_updation(email, base, quote, b_amount, -q_amount,'balance', 'balance')
-                id_ = TransactionClosed.insert(email, base, quote, b_amount, date, time, order_type, side, price)
+                # Wallet.increase_fixed_balance_currency_amt(email, quote, q_amount)
+                Wallet.do_wallet_updation(email, quote, quote, -q_amount, q_amount, 'balance', 'fixed_balance')
+                id_ = TransactionOpen.insert(email, base, quote, b_amount, date, time, order_type, side, price)
                 return id_, "Order placed successfully"
             else:
                 return None, 'Not enough balance' 
@@ -55,21 +46,19 @@ class TransactionClosed:
             if Wallet.check_balance(email, base, b_amount):
                 q_amount = price*b_amount
                 # Wallet.decrease_balance_currency_amt(email, base, b_amount)
-                # Wallet.increase_balance_currency_amt(email, quote, q_amount)
-                Wallet.do_wallet_updation(email, base, quote, -b_amount, q_amount,'balance', 'balance')
-                id_ = TransactionClosed.insert(email, base, quote, b_amount, date, time, order_type, side, price)
+                # Wallet.increase_fixed_balance_currency_amt(email, base, b_amount)
+                Wallet.do_wallet_updation(email, base, base, -b_amount, b_amount, 'balance', 'fixed_balance')
+                id_ = TransactionOpen.insert(email, base, quote, b_amount, date, time, order_type, side, price)
                 return id_, "Order placed successfully"
             else:
                 return None, 'Not enough balance'
     
-
     @classmethod
-    def insert(cls, email, base, quote, b_amount, date, time, order_type, side, price):
+    def insert(cls, email, base, quote, b_amount, date, time, order_type, side, price, id_ = 'default-thread'):
         client = MongoClient('localhost', 27017)
         db = client['test-user-db-compra-venta']
-        collection = db['test-transaction-closed-collection']
-
-        id_ = 'tp-sl'
+        collection = db['test-transaction-open-collection']
+        order = OrderSL(email, base, quote, date, time, order_type, side, b_amount, price)
         transaction_element = {
             'order_id':id_,
             'base' : base,
@@ -83,46 +72,66 @@ class TransactionClosed:
         }
 
         try:
+            from utils.StoplossThreads import startStoplossThread
             collection.update_one({'email':email},{'$push':{'transaction_list':transaction_element}})
+            startStoplossThread(order, id_)
             client.close()
             return id_
         except:
             client.close()
             return None 
         
-
+    @classmethod
+    def update(cls, email, base, quote, b_amount, date, time, order_type, side, price, id_):
+        pass
 
     @classmethod
-    def get_all_transactions(cls, email):
+    def delete(cls, email, id_, completed = False):
         client = MongoClient('localhost', 27017)
         db = client['test-user-db-compra-venta']
-        collection = db['test-transaction-closed-collection']
+        collection = db['test-transaction-open-collection']
+        try:
+            if not completed:
+                from utils.StoplossThreads import stopStoplossThread
+                stopStoplossThread(id_)
+            collection.update_one({'email':email},{'$pull':{'transaction_list':{'order_id':id_}}})
+            client.close()
+            return True, f"Stoploss order with order id {id_} cancelled."
+        except:
+            client.close()
+            return False, "Not able to delete the order"
+
+    @classmethod
+    def get_all_open_transactions(cls, email):
+        client = MongoClient('localhost', 27017)
+        db = client['test-user-db-compra-venta']
+        collection = db['test-transaction-open-collection']
         result = None
         try:
             result = collection.find_one({'email':email})
             client.close()
-        except:
+        except Exception as e:
             client.close()
-            pass
+            msg = str(e)
 
-        if result != None:  
-            return list(result['transaction_list'])
+        if result is not None:  
+            return result['transaction_list'], "successfully retrieved all transactions"
         else:
-            return None
+            return None, msg
 
 
     @classmethod
     def get_transactions_by_symbol(cls,email, symbol):
         client = MongoClient('localhost', 27017)
         db = client['test-user-db-compra-venta']
-        collection = db['test-transaction-closed-collection']
+        collection = db['test-transaction-open-collection']
         result = None
 
         try:
             result = collection.find_one({'email':email})
             if result == None:
                 return None
-            transaction_list = list(result['transaction_list'])
+            transaction_list = result['transaction_list']
             client.close()
             ans = []
             for d in transaction_list:
@@ -138,7 +147,8 @@ class TransactionClosed:
     def reset_account(cls,email):
         client = MongoClient('localhost', 27017)
         db = client['test-user-db-compra-venta']
-        collection = db['test-transaction-closed-collection']
+        collection = db['test-transaction-open-collection']
+        # close all running thread
         try:
             result = collection.update_one({'email':email}, {'$set',{'transaction_list':[]}})
             client.close()
@@ -152,3 +162,5 @@ class TransactionClosed:
 
         
     
+
+

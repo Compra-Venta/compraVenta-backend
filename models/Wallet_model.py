@@ -247,3 +247,18 @@ class Wallet:
 		except:
 			client.close()
 			return None, None, -1
+
+	
+	@classmethod
+	def do_wallet_updation(cls, email, coin_1, coin_2, amt_1, amt_2, source_1, source_2):
+
+		client=MongoClient('localhost',27017)
+		db=client['test-user-db-compra-venta']
+		collection=db['test-user-wallet']
+		try:
+			collection.update_one({'email':email}, {"$inc":{source_1+"."+coin_1: amt_1, source_2+"."+coin_2:amt_2}})
+			client.close()
+			return 1
+		except:
+			client.close()
+			return -1

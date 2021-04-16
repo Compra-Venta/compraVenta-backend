@@ -4,62 +4,39 @@ from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
-from models.User import User
+from resources.Wallet_resource import get_wallet, get_wallet_currency
+from resources.Transactions import MarketOrder, get_all_transactions, get_all_transactions_by_symbol
 from resources.User import RegisterUser, UserLogin, RefreshLogin, UpdatePassword, ForgotPassword, Profile
-from resources.Prediction import Predict
+# from resources.Prediction import Predict
+from resources.StoplossOrders import StoplossOrder, GetOpenOrders
 from resources.Watchlist import get_watchlist, add_symbol_to_watchlist, remove_symbol_from_watchlist
 from threading import Thread 
 import urllib.request
 import time
-
-data = None
 
 app = Flask(__name__)
 app.config["JWT_SECRET_KEY"] = "somesecretcode"
 jwt = JWTManager(app)
 api = Api(app)
 
-class Pnomics(Thread):
-    def run(self):
-        i=0
-        while(i!=500):
-            global data
-            url = "https://api.nomics.com/v1/currencies/ticker?key=9e4daddd8f3bf33f45eeba5fe9021b2f&ids=BTC,ETH&interval=1d,30d&convert=USD&per-page=100&page=1"
-            try:
-                data = eval(urllib.request.urlopen(url).read())
-            except:
-                pass
-            i+=1
-            time.sleep(10)
-
-
-# t1 = Pnomics()
-# t1.start()
-
-class Exchange(Resource):
-    
-    @jwt_required()
-    def get(self):
-        return data
-
-
-class Item(Resource):
-
-    @jwt_required()
-    def get(self):
-        return {'name': 'daksh'}
-
 api.add_resource(RegisterUser, '/register')
 api.add_resource(UserLogin, '/login')
 api.add_resource(Profile,'/myprofile')
 api.add_resource(RefreshLogin, '/reauth')
-api.add_resource(Item, '/item')
 api.add_resource(UpdatePassword, '/password/change')
-api.add_resource(Predict,'/predict')
+# api.add_resource(Predict,'/predict')
 api.add_resource(ForgotPassword,'/password/get_new')
 api.add_resource(get_watchlist,'/watchlist')
 api.add_resource(add_symbol_to_watchlist, '/watchlist/<string:symbol>')
 api.add_resource(remove_symbol_from_watchlist,'/watchlist/<string:symbol>')
+api.add_resource(get_wallet, '/wallet')
+api.add_resource(get_wallet_currency, '/wallet/<string:coin>')
+api.add_resource(MarketOrder, '/order/market')
+api.add_resource(get_all_transactions,'/transactions/closed')
+api.add_resource(get_all_transactions_by_symbol,'/transactions/closed/<string:coin>')
+api.add_resource(StoplossOrder, '/order/stoploss')
+api.add_resource(GetOpenOrders, '/transactions/open')
+
 if __name__ == '__main__':
     app.run(debug = True)
 

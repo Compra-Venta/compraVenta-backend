@@ -63,7 +63,7 @@ class get_all_transactions(Resource):
 			return {'error':'Transaction does not exists'},400
 			
 		else:
-			return {'transactions':transactions},200
+			return {'closed':transactions},200
 			
 
 class get_all_transactions_by_symbol(Resource):
@@ -79,6 +79,6 @@ class get_all_transactions_by_symbol(Resource):
 		if transactions is None:
 			return {'error':'Transaction does not exists'}, 400
 		else:
-			return {'transactions':transactions}, 200
+			return {'closed':transactions}, 200
 
 

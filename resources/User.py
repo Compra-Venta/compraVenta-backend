@@ -6,6 +6,9 @@ from flask_jwt_extended import jwt_required
 from utils.encryption import key, encrypt_password, decrypt_password
 from models.User import User
 from models.Watchlist import Watchlist 
+from models.Wallet_model import Wallet
+from models.TransactionClosed import TransactionClosed
+from models.TransactionOpen import TransactionOpen
 from utils.recovery_email import send_recovery_email
 from utils.password_generator import generate_password
 
@@ -52,6 +55,9 @@ class RegisterUser(Resource):
             user = User(email,password, name, age, country, balance)
             if user.insert():
                 Watchlist.create_user_watchlist(email)
+                Wallet.make_user_wallet(email)
+                TransactionClosed.create_transaction_history(email)
+                TransactionOpen.create_open_transaction_history(email)
                 return {"message": "registered successfully"}, 200
             else:
                 return {"message": "an error occurred"}, 500

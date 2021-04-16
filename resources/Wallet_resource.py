@@ -42,4 +42,3 @@ class get_wallet_currency(Resource):
 				'fixed_balance': fixed_balance
 
 			},200
-
