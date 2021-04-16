@@ -1,6 +1,7 @@
 import pymongo
 from pymongo import MongoClient
 from bson.objectid import ObjectId
+from models.Wallet_model import Wallet
 
 class TransactionClosed:
     def __init__(self):
@@ -28,27 +29,54 @@ class TransactionClosed:
         return True
 
     @classmethod
-    def insert(self, email, pair, q_amount, b_amount, date, time, order_type, side):
+    def insert_market(cls, email, base, quote, b_amount, date, time, order_type, side):
+        price = 1 #getLivePrice(base+quote)
+        if side == 'BUY':
+            q_amount = price*b_amount
+            if Wallet.check_balance(email, quote, q_amount):
+                Wallet.decrease_balance_currency_amt(email, quote, q_amount)
+                Wallet.increase_balance_currency_amt(email, base, b_amount)
+                id_ = TransactionClosed.insert(email, base, quote, b_amount, date, time, order_type, side, price)
+                return id_, "Order placed successfully"
+            else:
+                return None, 'Not enough balance' 
+        else:
+            if Wallet.check_balance(email, base, b_amount):
+                q_amount = price*b_amount
+                Wallet.decrease_balance_currency_amt(email, base, b_amount)
+                Wallet.increase_balance_currency_amt(email, quote, q_amount)
+                id_ = TransactionClosed.insert(email, base, quote, b_amount, date, time, order_type, side, price)
+                return id_, "Order placed successfully"
+            else:
+                return None, 'Not enough balance'
+    
+
+    @classmethod
+    def insert(cls, email, base, quote, b_amount, date, time, order_type, side, price):
         client = MongoClient('localhost', 27017)
         db = client['test-user-db-compra-venta']
         collection = db['test-transaction-closed-collection']
 
+        id_ = '12dasgfdg'
         transaction_element = {
-            'pair' : pair,
-            'q_amount' : q_amount,
+            'order_id':id_,
+            'base' : base,
+            'quote':quote,
             'b_amount' : b_amount,
+            'price': price,
             'date' : date,
             'time' : time,
             'order_type' : order_type,
             'side' : side
         }
+
         try:
-            result = collection.update_one({'email':email},{'$push':{'transaction_list':transaction_element}})
+            collection.update_one({'email':email},{'$push':{'transaction_list':transaction_element}})
             client.close()
-            return result.modified_one > 0
+            return id_
         except:
             client.close()
-            return False 
+            return None 
         
 
 
@@ -70,39 +98,6 @@ class TransactionClosed:
         else:
             return None
 
-    @classmethod
-    def get_transactions_by_date(cls,email, date):
-        client = MongoClient('localhost', 27017)
-        db = client['test-user-db-compra-venta']
-        collection = db['test-transaction-closed-collection']
-        result = None
-
-        try:
-            result = collection.find_one({'email':email})
-            if result == None:
-                return None
-            transaction_list = list(result['transaction_list'])
-            client.close()
-            found = False
-            start = -1
-            end = -1
-            for i,d in enumerate(transaction_list):
-                if found:
-                    if d['date'] > date:
-                        end = i
-                        break
-                else:
-                    if d['date'] == date:
-                        found = True
-                        start = i
-            if found and start > 0:
-                return transaction_list[start:end]
-            else:
-                return []
-                
-        except:
-            client.close()
-            return None
 
     @classmethod
     def get_transactions_by_symbol(cls,email, symbol):
@@ -119,7 +114,7 @@ class TransactionClosed:
             client.close()
             ans = []
             for d in transaction_list:
-                if d['pair'] == symbol:
+                if d['base'] == symbol or d['quote']==symbol:
                     ans.append(d)
             return ans
                 
@@ -133,7 +128,7 @@ class TransactionClosed:
         db = client['test-user-db-compra-venta']
         collection = db['test-transaction-closed-collection']
         try:
-            result = collection.update_one({'email':email},{'$set',{'transaction_list':[]}})
+            result = collection.update_one({'email':email}, {'$set',{'transaction_list':[]}})
             client.close()
             return result.matched_count > 0
         except:
