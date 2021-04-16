@@ -5,6 +5,8 @@ from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from models.Watchlist import Watchlist
 
+all_symbols = {'BTCUSDT', 'ETHUSDT', 'ETHBTC', 'LTCBTC', 'LTCUSDT','XRPBTC', 'XRPBNB', 'LTCBNB', 'BNBBTC','BNBETH','XRPETH','LTCETH','BNBUSDT'}
+
 class get_watchlist(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument(
@@ -34,6 +36,10 @@ class add_symbol_to_watchlist(Resource):
     def post(self, symbol):
         data = self.parser.parse_args()
         email = data['email']
+        if symbol not in all_symbols:
+            return {
+                'error':"Invalid symbol"
+            }, 400
         result = Watchlist.add_symbol(email,symbol)
         if result == 1:
             return {'message':'symbol added to watchlist'}, 201

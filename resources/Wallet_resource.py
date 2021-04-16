@@ -2,41 +2,44 @@ from flask import Flask
 from flask_restful import Resource, Api, reqparse
 from models.Wallet_model import Wallet
 
+all_coins = {'BTC','ETH','LTC','BNB','USDT','XRP'}
 
 class get_wallet(Resource):
 	parser=reqparse.RequestParser()
 	parser.add_argument('email',type=str,required=True)
 	def get(self):
-		data=self.parser.parse_arge()
+		data=self.parser.parse_args()
 		email=data['email']
-		wallet,_id=Wallet1.get_wallet(email)
+		wallet, code = Wallet.get_wallet(email)
 		if wallet is None:
-			return {"error","Wallet of this user doesn't exist"},400
+			return {"error":"User doesn't exist"}, 400
 		else:
 			return {
-
 				'email':wallet.email,
-				'balance':wallet.balance,
-				'fixed_balance':wallet.fixed_balance
-			},200
+				'balance': wallet.balance,
+				'fixed_balance': wallet.fixed_balance
+			}, 200
 
 
 class get_wallet_currency(Resource):
 	parser=reqparse.RequestParser()
 	parser.add_argument('email',type=str,required=True)
-	parser.add_argument('coin',type=str,required=True)
 	
-	def get(self):
-		data=self.parser.parse_arge()
+	def get(self, coin):
+		data=self.parser.parse_args()
 		email=data['email']
-		coin=data['coin']
-		currency,_id=Wallet1.get_wallet(email)
-		if currency is None:
-			return {"error","Wallet of this user doesn't exist"},400
+		if coin not in all_coins:
+			return {
+				'error':"Invalid coin"
+			}, 400
+		balance, fixed_balance, code = Wallet.get_wallet_currency(email, coin)
+		if balance is None:
+			return {"error":"User doesn't exist"},400
 		else:
 			return {
+				'coin': coin,
+				'balace': balance,
+				'fixed_balance': fixed_balance
 
-				'email':currency.email,
-				'currency':currency.balance.coin
 			},200
 
