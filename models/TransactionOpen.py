@@ -3,7 +3,7 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 from models.Wallet_model import Wallet
 from models.OrderStoploss import OrderSL
-
+from utils.UniqueString import generate_unique_string
 class TransactionOpen:
     def __init__(self):
         pass
@@ -59,6 +59,7 @@ class TransactionOpen:
         db = client['test-user-db-compra-venta']
         collection = db['test-transaction-open-collection']
         order = OrderSL(email, base, quote, date, time, order_type, side, b_amount, price)
+        id_=generate_unique_string(email)
         transaction_element = {
             'order_id':id_,
             'base' : base,

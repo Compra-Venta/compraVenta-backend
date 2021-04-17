@@ -2,7 +2,7 @@ import pymongo
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 from models.Wallet_model import Wallet
-
+from utils.UniqueString import generate_unique_string
 class TransactionClosed:
     def __init__(self):
         pass
@@ -69,7 +69,7 @@ class TransactionClosed:
         db = client['test-user-db-compra-venta']
         collection = db['test-transaction-closed-collection']
 
-        id_ = 'tp-sl'
+        id_ = generate_unique_string(email)
         transaction_element = {
             'order_id':id_,
             'base' : base,

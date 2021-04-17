@@ -38,7 +38,7 @@ class get_wallet_currency(Resource):
 		else:
 			return {
 				'coin': coin,
-				'balace': balance,
+				'balance': balance,
 				'fixed_balance': fixed_balance
 
 			},200
