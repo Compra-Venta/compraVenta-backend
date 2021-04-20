@@ -1,7 +1,7 @@
 from flask import Flask 
 from flask_restful import Resource, Api, reqparse
 from flask_jwt_extended import create_access_token, create_refresh_token
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from models.TransactionOpen import TransactionOpen
 
 class StoplossOrder(Resource):
@@ -107,6 +107,7 @@ class StoplossOrder(Resource):
 			required = True
 		)
 
+	@jwt_required()
 	def post(self):
 		data = self.parser.parse_args()
 		email = data['email']
@@ -118,6 +119,10 @@ class StoplossOrder(Resource):
 		side = data['side']
 		b_amount = data['b_amount']
 		stop = data['stop']
+		mail = get_jwt_identity()
+
+		if mail!=email:
+			return {'error':"Invalid token"}, 401
 
 		curr_price = None
 		from utils.StoplossThreads import client
@@ -151,6 +156,7 @@ class StoplossOrder(Resource):
 				'message': msg
 			}, 406
 
+	@jwt_required()
 	def put(self):
 		data = self.parser_update.parse_args()
 		email = data['email']
@@ -163,6 +169,10 @@ class StoplossOrder(Resource):
 		b_amount = data['b_amount']
 		stop = data['stop']
 		id_ = data['order_id']
+		mail = get_jwt_identity()
+		if mail!=email:
+			return {'error':"Invalid token"}, 401
+
 		done, msg = TransactionOpen.delete(email, id_)
 		if done:
 			
@@ -195,11 +205,14 @@ class StoplossOrder(Resource):
 			}, 400
 
 
-
+	@jwt_required()
 	def delete(self):
 		data = self.parser_del.parse_args()
 		email = data['email']
 		id_ = data['order_id']
+		mail = get_jwt_identity()
+		if mail!=email:
+			return {'error':"Invalid token"}, 401
 
 		done, msg = TransactionOpen.delete(email, id_)
 
@@ -222,10 +235,14 @@ class GetOpenOrders(Resource):
 			type = str,
 			required = True
 		)
-
+	@jwt_required()
 	def get(self):
 		data = self.parser.parse_args()
 		email = data['email']
+		mail = get_jwt_identity()
+		if mail!=email:
+			return {'error':"Invalid token"}, 401
+
 		orders, msg = TransactionOpen.get_all_open_transactions(email)
 		if orders is not None:
 			return {

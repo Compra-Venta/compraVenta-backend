@@ -97,8 +97,8 @@ class UserLogin(Resource):
             if decrypt_password(result.password) != password:
                 return {"error": "invalid credentials"}, 401 
             else:
-                access_token = create_access_token(identity = _id,fresh = True)
-                refresh_token = create_refresh_token(_id)
+                access_token = create_access_token(identity = result.email,fresh = True)
+                refresh_token = create_refresh_token(result.email)
                 return {
                     "access_token": access_token,
                     "refresh_token": refresh_token
@@ -131,13 +131,19 @@ class UpdatePassword(Resource):
     def post(self):
         data = self.parser.parse_args()
         email = data['email']
+
+        mail = get_jwt_identity()
+        if mail!=email:
+            return {"error":"Invalid token"}, 401
+
         new_password = encrypt_password(data['new_password'])
         password = (data['password'])
         user, _id = User.find_by_email(email)
+
         if(user == None):
-            return {"error":"User does not exists"}, 400
+            return {"error":"User does not exists"}, 404
         if decrypt_password(user.password) != password:
-            return {"error": "Invalid credentials"}, 400
+            return {"error": "Invalid credentials"}, 401
         try:
             done = user.update_password(new_password, _id)
             if done:
@@ -162,7 +168,7 @@ class ForgotPassword(Resource):
         encrypted_pass = encrypt_password(new_password)
         user, _id = User.find_by_email(email)
         if(user == None):
-            return {"error":"User does not exists"}, 400
+            return {"error":"User does not exists"}, 404
         try:
             done = user.update_password(encrypted_pass, _id)
             if done:
@@ -185,9 +191,13 @@ class Profile(Resource):
     def get(self):
         data = self.parser.parse_args()
         email = data['email']
+        mail = get_jwt_identity()
+        if mail!=email:
+            return {"error":"Invalid token"}, 401
+
         user, _id = User.find_by_email(email)
         if(user == None):
-            return {"error":"User does not exists"}, 400
+            return {"error":"User does not exists"}, 404
         else:
             return {
                 "email":user.email,
@@ -206,13 +216,13 @@ class UserLogout(Resource):
 						)
 	@jwt_required()
 	def post(self):
-		data=self.parser.parse_args()
-		#email=data['email']
-		#mail=get_jwt_identity()
-		#if mail == email:
-		jti = get_jwt()["jti"]
-		blocklist.jwt_redis_blocklist.set(jti, "", ex=ACCESS_EXPIRES)
-		return {"msg":"Access token revoked"},200
+        	data = self.parser.parse_args()
+        	email = data['email']
+        	mail = get_jwt_identity()
+        	if mail!=email: return {"error":"Invalid token"}, 401;
+        	jti = get_jwt()['jti']
+        	blocklist.jwt_redis_blocklist.set(jti, "", ex = ACCESS_EXPIRES)
+        	return {"msg":"Access token revoked"}, 200
 		 
 		 
 

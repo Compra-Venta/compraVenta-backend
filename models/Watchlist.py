@@ -45,17 +45,23 @@ class Watchlist():
         client = MongoClient('localhost', 27017)
         db = client['test-user-db-compra-venta']
         collection = db['test-watchlist-collection']
-
-        result = collection.find_one({'email':email})
+        try:
+        	result = collection.find_one({'email':email})
+        except:
+        	return -1
+        	
+        if result is None:
+        	return -1
+        	
         wl = list(result['watchlist'])
         if symbol not in wl:
-            try:
-                collection.update_one({'email':email},{'$push':{'watchlist':symbol}})
-                client.close()
-                return 1
-            except:
-                client.close()
-                return -1
+        	try:
+        		collection.update_one({'email':email},{'$push':{'watchlist':symbol}})
+        		client.close()
+        		return 1
+        	except:
+        		client.close()
+        		return -1
         else:
             client.close()
             return 2
@@ -65,8 +71,15 @@ class Watchlist():
         client = MongoClient('localhost', 27017)
         db = client['test-user-db-compra-venta']
         collection = db['test-watchlist-collection']
+        try:
 
-        result = collection.find_one({'email':email})
+        	result = collection.find_one({'email':email})
+        except:
+        	return -1
+
+        if result is None:
+        	return -1
+        
         wl = list(result['watchlist'])
         if symbol in wl:
             try:
