@@ -202,7 +202,7 @@ class StoplossOrder(Resource):
 			return {
 				'status':'failed',
 				'message': msg
-			}, 400
+			}, 406
 
 
 	@jwt_required()

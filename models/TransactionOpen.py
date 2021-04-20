@@ -96,11 +96,26 @@ class TransactionOpen:
                 from utils.StoplossThreads import stopStoplossThread
                 stopStoplossThread(id_)
             collection.update_one({'email':email},{'$pull':{'transaction_list':{'order_id':id_}}})
+            result = collection.find_one({"transaction_list.order_id":id_})
+            if result is not None:
+                return False, "Invalid order_id"
+
+            b_amount = result['b_amount']
+            price = result['price']
+            q_amount = price*b_amount
+            base = result['base']
+            quote = result['quote']
+            side = result['side']
+            if side == 'BUY':
+                Wallet.do_wallet_updation(email, quote, quote, q_amount, q_amount, 'fixed_balance', 'balance')
+            else:
+                Wallet.do_wallet_updation(email, base, base, b_amount, b_amount, 'fixed_balance', 'balance')
+
             client.close()
             return True, f"Stoploss order with order id {id_} cancelled."
         except:
             client.close()
-            return False, "Not able to delete the order"
+            return False, "Invalid order_id"
 
     @classmethod
     def get_all_open_transactions(cls, email):
