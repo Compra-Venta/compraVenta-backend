@@ -11,6 +11,6 @@ def generate_unique_string(email):
 	c=str(a+b1+email)
 	return c
 #email= input('email:')
-
+email='gh'
 s1=generate_unique_string(email)
 print(s1)

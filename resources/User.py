@@ -11,6 +11,8 @@ from models.TransactionClosed import TransactionClosed
 from models.TransactionOpen import TransactionOpen
 from utils.recovery_email import send_recovery_email
 from utils.password_generator import generate_password
+from utils.blacklist import BLACKLIST
+from flask_jwt_extended import get_raw_jwt
 
 class RegisterUser(Resource):
     parser = reqparse.RequestParser()
@@ -189,4 +191,13 @@ class Profile(Resource):
                 "PhoneNo":user.PhoneNo
             }, 200
 
+
+class UserLogout(Resource):
+	@jwt_required
+	def post(self):
+		 jti=get_raw_jwt()['jti']
+		 BLACKLIST.add(jti)
+		 return {'message':'Successfully logged out'},200
+		 
+		 
 

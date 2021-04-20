@@ -6,18 +6,29 @@ from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 from resources.Wallet_resource import get_wallet, get_wallet_currency
 from resources.Transactions import MarketOrder, get_all_transactions, get_all_transactions_by_symbol
-from resources.User import RegisterUser, UserLogin, RefreshLogin, UpdatePassword, ForgotPassword, Profile
+from resources.User import RegisterUser, UserLogin, RefreshLogin, UpdatePassword, ForgotPassword, Profile , UserLogout
 # from resources.Prediction import Predict
 from resources.StoplossOrders import StoplossOrder, GetOpenOrders
 from resources.Watchlist import get_watchlist, add_symbol_to_watchlist, remove_symbol_from_watchlist
 from threading import Thread 
 import urllib.request
 import time
+from utils.blacklist import BLACKLIST
 
 app = Flask(__name__)
 app.config["JWT_SECRET_KEY"] = "somesecretcode"
+app.config['JWT_BLACKLIST_ENABLED']=True
+app.config['JWT_BLACKLIST_TOKEN_CHECKS']=['access','refresh']
 jwt = JWTManager(app)
 api = Api(app)
+
+@jwt.token_in_blacklist_loader
+def check_if_token_in_blacklist(decrypted_token):
+	return decrypted_token['jti'] in BLACKLIST
+
+@jwt.revoked_token_loader
+def revoked_roken_callback():
+	return { 'message':'The token has been revoked'},401
 
 api.add_resource(RegisterUser, '/register')
 api.add_resource(UserLogin, '/login')
@@ -36,7 +47,7 @@ api.add_resource(get_all_transactions,'/transactions/closed')
 api.add_resource(get_all_transactions_by_symbol,'/transactions/closed/<string:coin>')
 api.add_resource(StoplossOrder, '/order/stoploss')
 api.add_resource(GetOpenOrders, '/transactions/open')
-
+api.add_resource(UserLogout,'/logout')
 if __name__ == '__main__':
     app.run(debug = True)
 
