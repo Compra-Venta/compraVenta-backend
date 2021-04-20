@@ -13,29 +13,33 @@ from resources.Watchlist import get_watchlist, add_symbol_to_watchlist, remove_s
 from threading import Thread 
 import urllib.request
 import time
-from utils.blacklist import BLACKLIST
+from utils import blocklist
+from datetime import timedelta
 
 app = Flask(__name__)
 app.config["JWT_SECRET_KEY"] = "somesecretcode"
-app.config['JWT_BLACKLIST_ENABLED']=True
-app.config['JWT_BLACKLIST_TOKEN_CHECKS']=['access','refresh']
+
+ACCESS_EXPIRES= timedelta(hours=1)
+
+app.config["JWT_ACCESS_TOKEN_EXPIRES"]=ACCESS_EXPIRES
+app.config['JWT_BLACKLIST_ENABLED'] = True
 jwt = JWTManager(app)
 api = Api(app)
 
-@jwt.token_in_blacklist_loader
-def check_if_token_in_blacklist(decrypted_token):
-	return decrypted_token['jti'] in BLACKLIST
 
-@jwt.revoked_token_loader
-def revoked_roken_callback():
-	return { 'message':'The token has been revoked'},401
+@jwt.token_in_blocklist_loader
+def check_if_token_is_revoked(jwt_header,jwt_payload):
+    jti = jwt_payload["jti"]
+    token_in_redis = blocklist.jwt_redis_blocklist.get(jti)
+    return token_in_redis is not None
 
+    
 api.add_resource(RegisterUser, '/register')
 api.add_resource(UserLogin, '/login')
 api.add_resource(Profile,'/myprofile')
 api.add_resource(RefreshLogin, '/reauth')
 api.add_resource(UpdatePassword, '/password/change')
-# api.add_resource(Predict,'/predict')
+#api.add_resource(Predict,'/predict')
 api.add_resource(ForgotPassword,'/password/get_new')
 api.add_resource(get_watchlist,'/watchlist')
 api.add_resource(add_symbol_to_watchlist, '/watchlist/<string:symbol>')

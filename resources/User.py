@@ -12,7 +12,13 @@ from models.TransactionOpen import TransactionOpen
 from utils.recovery_email import send_recovery_email
 from utils.password_generator import generate_password
 from utils.blacklist import BLACKLIST
-from flask_jwt_extended import get_raw_jwt
+from flask_jwt_extended import get_jwt
+from flask_jwt_extended import JWTManager
+from utils import blocklist
+from datetime import timedelta
+
+
+ACCESS_EXPIRES = timedelta(hours=1)
 
 class RegisterUser(Resource):
     parser = reqparse.RequestParser()
@@ -193,11 +199,20 @@ class Profile(Resource):
 
 
 class UserLogout(Resource):
-	@jwt_required
+	parser=reqparse.RequestParser()
+	parser.add_argument('email',
+						type=str,
+						required=True
+						)
+	@jwt_required()
 	def post(self):
-		 jti=get_raw_jwt()['jti']
-		 BLACKLIST.add(jti)
-		 return {'message':'Successfully logged out'},200
+		data=self.parser.parse_args()
+		#email=data['email']
+		#mail=get_jwt_identity()
+		#if mail == email:
+		jti = get_jwt()["jti"]
+		blocklist.jwt_redis_blocklist.set(jti, "", ex=ACCESS_EXPIRES)
+		return {"msg":"Access token revoked"},200
 		 
 		 
 
