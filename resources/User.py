@@ -200,6 +200,7 @@ class Profile(Resource):
             return {"error":"User does not exists"}, 404
         else:
             return {
+            	"user_id":_id,
                 "email":user.email,
                 "name":user.name,
                 "age":user.age,
