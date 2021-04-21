@@ -49,7 +49,7 @@ class MarketOrder(Resource):
 		if id_:
 			return {'status':'successful', 'order_id':id_}, 200
 		else:
-			return {'status':'failed', 'msg':msg}, 500
+			return {'status':'failed', 'msg':msg}, 406
 
 
 
@@ -73,7 +73,7 @@ class get_all_transactions(Resource):
 			return {'error':'Transaction does not exists'},400
 			
 		else:
-			return {'closed':transactions},200
+			return {'closed':transactions[::-1]},200
 			
 
 class get_all_transactions_by_symbol(Resource):
@@ -94,6 +94,6 @@ class get_all_transactions_by_symbol(Resource):
 		if transactions is None:
 			return {'error':'Transaction does not exists'}, 400
 		else:
-			return {'closed':transactions}, 200
+			return {'closed':transactions[::-1]}, 200
 
 

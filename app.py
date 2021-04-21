@@ -4,6 +4,7 @@ from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 from resources.Wallet_resource import get_wallet, get_wallet_currency
 from resources.Transactions import MarketOrder, get_all_transactions, get_all_transactions_by_symbol
 from resources.User import RegisterUser, UserLogin, RefreshLogin, UpdatePassword, ForgotPassword, Profile , UserLogout
@@ -17,6 +18,7 @@ from utils import blocklist
 from datetime import timedelta
 
 app = Flask(__name__)
+CORS(app)
 app.config["JWT_SECRET_KEY"] = "somesecretcode"
 
 ACCESS_EXPIRES= timedelta(hours=1)

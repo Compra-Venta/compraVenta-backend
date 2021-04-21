@@ -246,7 +246,7 @@ class GetOpenOrders(Resource):
 		orders, msg = TransactionOpen.get_all_open_transactions(email)
 		if orders is not None:
 			return {
-				'open': orders
+				'open': orders[::-1]
 			}, 200	
 		else:
 			return {
