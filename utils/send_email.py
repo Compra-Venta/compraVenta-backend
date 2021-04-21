@@ -7,8 +7,8 @@ def send_email(email, name, new_password):
     port = 587  # For starttls
     smtp_server = "smtp.gmail.com"
     sender_email = "teamcompraventa@gmail.com"
-    receiver_email = "karanstar2397@gmail.com"
-    password = "compraventa@pec"
+    receiver_email = email
+    password = ""
     message = f"""\
     Subject: Password recovery.
 
