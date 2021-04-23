@@ -1,3 +1,0 @@
-email_password = "compraventa@pec"
-api_key = "ca3nYSxuQj0wwzr5gCaZpfgNP3yuyAseEUSiqY99u3YR87Wgmkd9kLfuokTRHj9G"
-secret_key = "brdSn0IKErLO84c5bLzR2CK8QVtCgYPncuslQ3VuFge9Mili7Dh5y9QKgin34xGv"
