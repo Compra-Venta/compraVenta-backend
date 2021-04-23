@@ -4,6 +4,7 @@ from binance.websockets import BinanceSocketManager
 import threading
 import time
 from models.Wallet_model import Wallet
+from utils.config import api_key, secret_key
 
 class OrderStoploss:
 	def __init__(self, email, base, quote, date, time, order_type, side, b_amount, stop):
@@ -17,8 +18,6 @@ class OrderStoploss:
 		self.stop = stop
 
 
-api_key = ""
-secret_key = ""
 client = Client(api_key, secret_key)
 
 bm = BinanceSocketManager(client)

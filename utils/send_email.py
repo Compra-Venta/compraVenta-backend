@@ -1,5 +1,5 @@
 import smtplib, ssl
-
+from utils.config import email_pass
 
 def send_email(email, name, new_password):
     
@@ -8,7 +8,7 @@ def send_email(email, name, new_password):
     smtp_server = "smtp.gmail.com"
     sender_email = "teamcompraventa@gmail.com"
     receiver_email = email
-    password = ""
+    password = email_password
     message = f"""\
     Subject: Password recovery.
 
