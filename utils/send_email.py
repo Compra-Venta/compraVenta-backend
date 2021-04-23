@@ -1,5 +1,5 @@
 import smtplib, ssl
-from utils.config import email_pass
+from utils.config import email_password
 
 def send_email(email, name, new_password):
     

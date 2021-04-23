@@ -14,6 +14,6 @@ class Predict(Resource):
         p = prediction.get_predictions(symbol, interval)
 
         if p != None:
-            return {'prediciton':p}, 200
+            return {'prediction':p}, 200
         else:
             return {'error':'An error occurred'}, 500

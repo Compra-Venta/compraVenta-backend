@@ -173,7 +173,7 @@ class ForgotPassword(Resource):
             done = user.update_password(encrypted_pass, _id)
             if done:
                 send_recovery_email(email, user.name, new_password)
-                return {"message": new_password}, 200
+                return {"message": "Password Changed"}, 200
             else:
                 return {"error": "Some error occured."}, 500
         except Exception as e:
