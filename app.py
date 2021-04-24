@@ -8,7 +8,7 @@ from flask_cors import CORS
 from resources.Wallet_resource import get_wallet, get_wallet_currency
 from resources.Transactions import MarketOrder, get_all_transactions, get_all_transactions_by_symbol
 from resources.User import RegisterUser, UserLogin, RefreshLogin, UpdatePassword, ForgotPassword, Profile , UserLogout
-from resources.Prediction import Predict
+# from resources.Prediction import Predict
 from resources.StoplossOrders import StoplossOrder, GetOpenOrders
 from resources.Watchlist import get_watchlist, add_symbol_to_watchlist, remove_symbol_from_watchlist
 from threading import Thread 
@@ -25,6 +25,7 @@ ACCESS_EXPIRES= timedelta(hours=1)
 
 app.config["JWT_ACCESS_TOKEN_EXPIRES"]=ACCESS_EXPIRES
 app.config['JWT_BLACKLIST_ENABLED'] = True
+app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']
 jwt = JWTManager(app)
 api = Api(app)
 
@@ -41,7 +42,7 @@ api.add_resource(UserLogin, '/login')
 api.add_resource(Profile,'/myprofile')
 api.add_resource(RefreshLogin, '/reauth')
 api.add_resource(UpdatePassword, '/password/change')
-api.add_resource(Predict,'/predict')
+#api.add_resource(Predict,'/predict')
 api.add_resource(ForgotPassword,'/password/get_new')
 api.add_resource(get_watchlist,'/watchlist')
 api.add_resource(add_symbol_to_watchlist, '/watchlist/<string:symbol>')

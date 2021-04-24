@@ -226,4 +226,35 @@ class UserLogout(Resource):
         	return {"msg":"Access token revoked"}, 200
 		 
 		 
+		 
+
+class ResetAccount(Resource):
+	parser=reqparse.RequestParser()
+	parser.add_argument('email',
+						type=str,
+						required=True
+						)
+	@jwt_required()
+	def put(self):
+		data = self.parser.parse_args()
+		email = data['email']
+		user, _id = User.find_by_email(email)
+		if(user == None):
+            return {"error":"User does not exists"}, 404
+        else:
+			try:
+				done1=TransactionOpen.reset_account(email)
+				done2=TransactionClosed.reset_account(email)
+				done3=Wallet.reset_account(email)
+				done4=Watchlist.reset_account(email)
+				if done1 and done2 and done3 and done4:
+					return {"msg":"Account reset successful"},200
+				else:
+                	return {"error": "Some error occured"}, 500
+    		except:
+    			return {"error": "Some error occured"}, 500
+			
+			
+		 
+		 
 
