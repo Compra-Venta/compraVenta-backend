@@ -1,18 +1,17 @@
-import tensorflow as tf
-import numpy as np
+# import tensorflow as tf
+from binance.client import Client
+
+def get_predictions(symbol,interval):
+    from utils.StoplossThreads import client
+    klines = client.get_historical_klines(symbol, interval, "1 Jan, 2015")
+    values = [x[4] for x in klines]
+    a = 0.7
+    last_avg = 0
+    for i in range(len(values)):
+        t = values[i]
+        last_avg = a*float(t) + (1-a)*last_avg
+    return last_avg
 
 
-def get_predictions(prices,symbol,interval):
-    with tf.device("/cpu:0"):
-        return 193.345464
-        min_array = np.load(f'Data/{symbol}/min_array.npy')
-        max_array = np.load(f'Data/{symbol}/max_array.npy')
-        prices = np.array(prices)
-        prices = (prices - min_array.reshape(1,-1))/(max_array.reshape(1,-1) - min_array.reshape(1,-1))
-        model = tf.keras.models.load_model(f'Data/{symbol}/{symbol.lower()}-{interval}')
-        prices = prices.reshape(1,10,5)
-        result = model.predict(prices)
-        result = result*(max_array[3] - min_array[3]) + min_array[3]
-        return result 
 
 

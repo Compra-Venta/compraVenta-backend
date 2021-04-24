@@ -107,7 +107,7 @@ class UserLogin(Resource):
 
 class RefreshLogin(Resource):
     @jwt_required(refresh = True)
-    def post(self):
+    def get(self):
         current_user = get_jwt_identity()
         new_token = create_access_token(identity = current_user, fresh = False)
         return {'access_token':new_token}, 200
@@ -173,11 +173,11 @@ class ForgotPassword(Resource):
             done = user.update_password(encrypted_pass, _id)
             if done:
                 send_recovery_email(email, user.name, new_password)
-                return {"message": "Password changed successfully."}, 200
+                return {"message": "Password Changed"}, 200
             else:
-                return {"error": "Some error occured"}, 500
-        except:
-            return {"error": "Some error occured"}, 500
+                return {"error": "Some error occured."}, 500
+        except Exception as e:
+            return {"error": str(e)}, 500
 
 
 class Profile(Resource):
@@ -200,6 +200,7 @@ class Profile(Resource):
             return {"error":"User does not exists"}, 404
         else:
             return {
+            	"user_id":_id,
                 "email":user.email,
                 "name":user.name,
                 "age":user.age,

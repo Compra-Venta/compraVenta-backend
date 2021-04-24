@@ -95,27 +95,37 @@ class TransactionOpen:
             if not completed:
                 from utils.StoplossThreads import stopStoplossThread
                 stopStoplossThread(id_)
+            r = collection.find_one({"email":email})
             collection.update_one({'email':email},{'$pull':{'transaction_list':{'order_id':id_}}})
-            result = collection.find_one({"transaction_list.order_id":id_})
-            if result is not None:
-                return False, "Invalid order_id"
-
-            b_amount = result['b_amount']
-            price = result['price']
-            q_amount = price*b_amount
-            base = result['base']
-            quote = result['quote']
-            side = result['side']
-            if side == 'BUY':
-                Wallet.do_wallet_updation(email, quote, quote, q_amount, q_amount, 'fixed_balance', 'balance')
+            result = None
+            if r is None:
+                return False, "Invalid User ID"
             else:
-                Wallet.do_wallet_updation(email, base, base, b_amount, b_amount, 'fixed_balance', 'balance')
+            	for element in r['transaction_list']:
+            		if element['order_id'] == id_:
+            			result = element
+            			break
+            
+            if result is None:
+            	return False, "Invalid order_id"
+		
+            if not completed:
+            	b_amount = result['b_amount']
+            	price = result['price']
+            	q_amount = price*b_amount
+            	base = result['base']
+            	quote = result['quote']
+            	side = result['side']
+            	if side == 'BUY':
+            		Wallet.do_wallet_updation(email, quote, quote, -q_amount, q_amount, 'fixed_balance', 'balance')
+            	else:
+            		Wallet.do_wallet_updation(email, base, base, -b_amount, b_amount, 'fixed_balance', 'balance')
 
             client.close()
             return True, f"Stoploss order with order id {id_} cancelled."
-        except:
+        except Exception as e:
             client.close()
-            return False, "Invalid order_id"
+            return False, str(e)+"error"
 
     @classmethod
     def get_all_open_transactions(cls, email):
