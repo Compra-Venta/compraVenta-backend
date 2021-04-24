@@ -171,14 +171,21 @@ class TransactionOpen:
 
     @classmethod
     def reset_account(cls,email):
+        from utils.StoplossThreads import stopStoplossThread
         client = MongoClient('localhost', 27017)
         db = client['test-user-db-compra-venta']
         collection = db['test-transaction-open-collection']
         # close all running thread
         try:
-            result = collection.update_one({'email':email}, {'$set',{'transaction_list':[]}})
+            account = collection.find_one({"email":email})
+            ls = []
+            for doc in account['transaction_list']:
+                ls.append(doc['order_id'])
+            for i in ls:
+                stopStoplossThread(i)
+            result = collection.update_one({'email':email}, {'$set':{'transaction_list':[]}})
             client.close()
-            return result.matched_count > 0
+            return True
         except:
             return False
 

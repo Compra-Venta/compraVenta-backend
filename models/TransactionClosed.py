@@ -140,11 +140,12 @@ class TransactionClosed:
         db = client['test-user-db-compra-venta']
         collection = db['test-transaction-closed-collection']
         try:
-            result = collection.update_one({'email':email}, {'$set',{'transaction_list':[]}})
+            collection.update_one({'email':email}, {'$set':{'transaction_list':[]}})
             client.close()
-            return result.matched_count > 0
+            return True
         except:
-            return False
+        	client.close()
+        	return False
 
 
 

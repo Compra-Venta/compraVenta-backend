@@ -5,7 +5,7 @@ from bson.objectid import ObjectId
 class Watchlist():
 
     @classmethod 
-    def clear_watchlist(cls,email):
+    def reset_account(cls,email):
         client = MongoClient('localhost', 27017)
         db = client['test-user-db-compra-venta']
         collection = db['test-watchlist-collection']

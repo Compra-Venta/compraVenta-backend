@@ -224,6 +224,33 @@ class UserLogout(Resource):
         	jti = get_jwt()['jti']
         	blocklist.jwt_redis_blocklist.set(jti, "", ex = ACCESS_EXPIRES)
         	return {"msg":"Access token revoked"}, 200
-		 
+
+class ResetAccount(Resource):
+	parser = reqparse.RequestParser()
+	parser.add_argument('email',
+				type = str,
+				required = True,
+				)
+
+	@jwt_required()
+	def put(self):
+		data = self.parser.parse_args()
+		email = data['email']
+		mail = get_jwt_identity()
+		if mail!=email:
+			return {"error":"Invalid Token"}, 401
+
+		try:
+			done1 = TransactionOpen.reset_account(email)
+			done2 = TransactionClosed.reset_account(email)
+			done3 = Wallet.reset_account(email)
+			done4 = Watchlist.reset_account(email)
+
+			if done1 and done2 and done3 and done4:
+				return {"message":"Account reset successfully"}, 204	
+			else:
+				return {"error":"Some error occured."}, 500
+		except:
+			return {"error":"Some error occured"}, 500 	 
 		 
 
