@@ -58,6 +58,7 @@ class RegisterUser(Resource):
         age = data['age']
         country = data['country']
         balance = data['PhoneNo']
+
         _user, _id = User.find_by_email(email)
         if _user == None:
             user = User(email,password, name, age, country, balance)

@@ -27,6 +27,7 @@ class User:
 
         
         def insert(self):
+                print('Hello World')
                 client = MongoClient('localhost', 27017)
                 db = client['test-user-db-compra-venta']
                 collection = db['test-user-collection']
@@ -39,7 +40,6 @@ class User:
                         "country": self.country,
                         "PhoneNo": self.PhoneNo
                 }
-
                 try:
                         if collection.insert_one(post) == None:
                                 client.close()

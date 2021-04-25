@@ -11,7 +11,3 @@ def get_predictions(symbol,interval):
         t = values[i]
         last_avg = a*float(t) + (1-a)*last_avg
     return last_avg
-
-
-
-

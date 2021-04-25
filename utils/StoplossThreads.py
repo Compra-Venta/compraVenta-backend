@@ -5,7 +5,7 @@ import threading
 import time
 from models.Wallet_model import Wallet
 from utils.config import api_key, secret_key
-
+from utils.StoplossEmail import send_email
 class OrderStoploss:
 	def __init__(self, email, base, quote, date, time, order_type, side, b_amount, stop):
 		self.email = email
@@ -60,6 +60,7 @@ class StoplossThread(threading.Thread):
                                     Wallet.do_wallet_updation(self.order.email,self.order.quote, self.order.base, -q_amount, self.order.b_amount, 'fixed_balance', 'balance')
                                     TransactionClosed.insert(self.order.email, self.order.base, self.order.quote,self.order.b_amount, self.order.date, self.order.time, self.order.order_type, self.order.side, self.order.stop)
                                     TransactionOpen.delete(self.order.email, self.name, True)
+                                    send_email(email, base, quote, date, time, order_type, side, b_amount, stop)
                                     flag = True
                                     self.transaction_complete = 1
                                     break
@@ -82,6 +83,7 @@ class StoplossThread(threading.Thread):
                                     Wallet.do_wallet_updation(self.order.email,self.order.quote, self.order.base, -q_amount, self.order.b_amount, 'fixed_balance', 'balance')
                                     TransactionClosed.insert(self.order.email, self.order.base, self.order.quote,self.order.b_amount, self.order.date, self.order.time, self.order.order_type, self.order.side, self.order.stop)
                                     TransactionOpen.delete(self.order.email, self.name, True)
+                                    send_email(email, base, quote, date, time, order_type, side, b_amount, stop)
                                     flag = True
                                     self.transaction_complete = 1
                                     break
@@ -106,6 +108,7 @@ class StoplossThread(threading.Thread):
                                     Wallet.do_wallet_updation(self.order.email,self.order.base, self.order.quote, -self.order.b_amount, q_amount, 'fixed_balance', 'balance')
                                     TransactionClosed.insert(self.order.email, self.order.base, self.order.quote,self.order.b_amount, self.order.date, self.order.time, self.order.order_type, self.order.side, self.order.stop)
                                     TransactionOpen.delete(self.order.email, self.name, True)
+                                    send_email(email, base, quote, date, time, order_type, side, b_amount, stop)
                                     flag = True
                                     break
                         if flag:
@@ -127,6 +130,7 @@ class StoplossThread(threading.Thread):
                                     Wallet.do_wallet_updation(self.order.email,self.order.base, self.order.quote, -self.order.b_amount, q_amount, 'fixed_balance', 'balance')
                                     TransactionClosed.insert(self.order.email, self.order.base, self.order.quote,self.order.b_amount, self.order.date, self.order.time, self.order.order_type, self.order.side, self.order.stop)
                                     TransactionOpen.delete(self.order.email, self.name, True)
+                                    send_email(email, base, quote, date, time, order_type, side, b_amount, stop)
                                     flag = True
                                     break
                         if flag:
