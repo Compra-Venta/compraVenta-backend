@@ -11,9 +11,9 @@ def send_email(email, base, quote, date, time, order_type, side, b_amount, stop)
     message = f"""\
     Subject: Stoploss Order.
     Hello {email},
-    New password has been set successfully for your account on Compra-Venta.
+    Your stoploss order with base {base} , quote {quote}, on date {date} at time {time}
+    and order type {order_type}, side {side} with base amount {b_amount} has been successful.
     For any queries contact {query_email}.
-    New Password : {time}
     """
 
     context = ssl.create_default_context()
