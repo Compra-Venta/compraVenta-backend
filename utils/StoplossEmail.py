@@ -1,4 +1,5 @@
 import smtplib, ssl
+from utils.config import email_password
 
 def send_email(email, base, quote, date, time, order_type, side, b_amount, stop):
     
@@ -7,7 +8,7 @@ def send_email(email, base, quote, date, time, order_type, side, b_amount, stop)
     smtp_server = "smtp.gmail.com"
     sender_email = "teamcompraventa@gmail.com"
     receiver_email = email
-    #password = email_password
+    password = email_password
     message = f"""\
     Subject: Stoploss Order.
     Hello {email},
