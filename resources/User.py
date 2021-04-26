@@ -47,7 +47,7 @@ class RegisterUser(Resource):
                         )
 
     parser.add_argument('PhoneNo',
-                        type = int,
+                        type = str,
                         required = True
                         )
     def post(self):

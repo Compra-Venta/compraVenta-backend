@@ -23,6 +23,7 @@ class Wallet:
 			if result is not None:
 				bal=result['balance']
 				currency_amt=bal[coin]
+				print(currency_amt)
 				if currency_amt >= amount:
 					# true
 					return 1

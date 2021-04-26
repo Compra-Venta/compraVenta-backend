@@ -33,7 +33,7 @@ class TransactionOpen:
     def insert_stoploss(cls, email, base, quote, b_amount, date, time, order_type, side, stop):
         price = stop
         if side == 'BUY':
-            q_amount = price * b_amount
+            q_amount = round(price * b_amount,8)
             if Wallet.check_balance(email, quote, q_amount):
                 # Wallet.decrease_balance_currency_amt(email, quote, q_amount)
                 # Wallet.increase_fixed_balance_currency_amt(email, quote, q_amount)
@@ -44,7 +44,7 @@ class TransactionOpen:
                 return None, 'Not enough balance' 
         else:
             if Wallet.check_balance(email, base, b_amount):
-                q_amount = price*b_amount
+                q_amount = round(price*b_amount,8)
                 # Wallet.decrease_balance_currency_amt(email, base, b_amount)
                 # Wallet.increase_fixed_balance_currency_amt(email, base, b_amount)
                 Wallet.do_wallet_updation(email, base, base, -b_amount, b_amount, 'balance', 'fixed_balance')
@@ -112,7 +112,7 @@ class TransactionOpen:
             if not completed:
             	b_amount = result['b_amount']
             	price = result['price']
-            	q_amount = price*b_amount
+            	q_amount = round(price*b_amount,8)
             	base = result['base']
             	quote = result['quote']
             	side = result['side']

@@ -34,7 +34,7 @@ class TransactionClosed:
         price = None
         try:
             info = client.get_symbol_ticker(symbol = (base+quote))
-            price = float(info['price'])
+            price = round(float(info['price']),8)
         except:
             return None, "Internal server error."
 
@@ -42,7 +42,7 @@ class TransactionClosed:
             return None, "Internal server error."
             
         if side == 'BUY':
-            q_amount = price*b_amount
+            q_amount = round(price*b_amount,8)
             if Wallet.check_balance(email, quote, q_amount):
                 # Wallet.decrease_balance_currency_amt(email, quote, q_amount)
                 # Wallet.increase_balance_currency_amt(email, base, b_amount)
@@ -53,7 +53,7 @@ class TransactionClosed:
                 return None, 'Not enough balance' 
         else:
             if Wallet.check_balance(email, base, b_amount):
-                q_amount = price*b_amount
+                q_amount = round(price*b_amount,8)
                 # Wallet.decrease_balance_currency_amt(email, base, b_amount)
                 # Wallet.increase_balance_currency_amt(email, quote, q_amount)
                 Wallet.do_wallet_updation(email, base, quote, -b_amount, q_amount,'balance', 'balance')
