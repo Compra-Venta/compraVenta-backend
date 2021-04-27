@@ -2,6 +2,7 @@ from flask import Flask
 from flask_restful import Resource, Api, reqparse
 from models.Wallet_model import Wallet
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from models.Profit import get_profit
 
 all_coins = {'BTC','ETH','LTC','BNB','USDT','XRP'}
 
@@ -21,8 +22,10 @@ class get_wallet(Resource):
 		if wallet is None:
 			return {"error":"User doesn't exist"}, 400
 		else:
+			profit = get_profit(wallet)
 			return {
 				'email':wallet.email,
+				'profit':profit,
 				'balance': wallet.balance,
 				'fixed_balance': wallet.fixed_balance
 			}, 200
