@@ -2,7 +2,7 @@ from flask import Flask
 from flask_restful import Resource, Api, reqparse
 from models.TransactionClosed import TransactionClosed
 from flask_jwt_extended import jwt_required, get_jwt_identity
-
+all_symbols = {'BTCUSDT', 'ETHUSDT', 'ETHBTC', 'LTCBTC', 'LTCUSDT','XRPBTC', 'XRPBNB', 'LTCBNB', 'BNBBTC','BNBETH','XRPETH','LTCETH','BNBUSDT','XRPUSDT'}
 class MarketOrder(Resource):
 	parser=reqparse.RequestParser()
 	parser.add_argument('email',
@@ -39,10 +39,11 @@ class MarketOrder(Resource):
 		order_type=str('M')
 		side=data['side']
 		mail = get_jwt_identity()
+		symbol=base+quote
 		if mail!=email:
 			return {'error':"Invalid token"}, 401
-
-
+		if symbol not in all_symbols:
+			return {"error":"Invalid Symbol"}, 400
 		# id_ ="daksh"
 		# msg = "temp id"
 		id_, msg = TransactionClosed.insert_market(email,base,quote,b_amount,date,time,order_type,side)

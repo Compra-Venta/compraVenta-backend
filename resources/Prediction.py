@@ -1,7 +1,7 @@
 from flask import Flask, request
 from flask_restful import Resource, Api, reqparse
 from prediction_model import prediction
-all_symbols = {'BTCUSDT', 'ETHUSDT', 'ETHBTC', 'LTCBTC', 'LTCUSDT','XRPBTC', 'XRPBNB', 'LTCBNB', 'BNBBTC','BNBETH','XRPETH','LTCETH','BNBUSDT'}
+all_symbols = {'BTCUSDT', 'ETHUSDT', 'ETHBTC', 'LTCBTC', 'LTCUSDT','XRPBTC', 'XRPBNB', 'LTCBNB', 'BNBBTC','BNBETH','XRPETH','LTCETH','BNBUSDT','XRPUSDT'}
 class Predict(Resource):
     def get(self):
         symbol = request.args.get('symbol')

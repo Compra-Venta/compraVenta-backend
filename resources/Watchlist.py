@@ -5,7 +5,7 @@ from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from models.Watchlist import Watchlist
 
-all_symbols = {'BTCUSDT', 'ETHUSDT', 'ETHBTC', 'LTCBTC', 'LTCUSDT','XRPBTC', 'XRPBNB', 'LTCBNB', 'BNBBTC','BNBETH','XRPETH','LTCETH','BNBUSDT'}
+all_symbols = {'BTCUSDT', 'ETHUSDT', 'ETHBTC', 'LTCBTC', 'LTCUSDT','XRPBTC', 'XRPBNB', 'LTCBNB', 'BNBBTC','BNBETH','XRPETH','LTCETH','BNBUSDT','XRPUSDT'}
 
 class get_watchlist(Resource):
     parser = reqparse.RequestParser()
