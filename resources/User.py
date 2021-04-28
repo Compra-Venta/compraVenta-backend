@@ -96,7 +96,7 @@ class UserLogin(Resource):
             return {"error": "Email id not found"}, 404
         else:
             if decrypt_password(result.password) != password:
-                return {"error": "invalid credentials"}, 401 
+                return {"error": "invalid credentials"}, 403 
             else:
                 access_token = create_access_token(identity = result.email,fresh = True)
                 refresh_token = create_refresh_token(result.email)
@@ -144,7 +144,7 @@ class UpdatePassword(Resource):
         if(user == None):
             return {"error":"User does not exists"}, 404
         if decrypt_password(user.password) != password:
-            return {"error": "Invalid credentials"}, 401
+            return {"error": "Invalid credentials"}, 403
         try:
             done = user.update_password(new_password, _id)
             if done:
