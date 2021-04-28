@@ -60,9 +60,9 @@ class StoplossThread(threading.Thread):
                                     Wallet.do_wallet_updation(self.order.email,self.order.quote, self.order.base, -q_amount, self.order.b_amount, 'fixed_balance', 'balance')
                                     TransactionClosed.insert(self.order.email, self.order.base, self.order.quote,self.order.b_amount, self.order.date, self.order.time, self.order.order_type, self.order.side, self.order.stop)
                                     TransactionOpen.delete(self.order.email, self.name, True)
-                                    print('hello')
+                                    #print('hello')
                                     send_email(self.order.email, self.order.base, self.order.quote, self.order.date, self.order.time, self.order.order_type, self.order.side, self.order.b_amount, self.order.stop, self.name)
-                                    print('Hello')
+                                    #print('Hello')
                                     flag = True
                                     self.transaction_complete = 1
                                     break
@@ -85,9 +85,9 @@ class StoplossThread(threading.Thread):
                                     Wallet.do_wallet_updation(self.order.email,self.order.quote, self.order.base, -q_amount, self.order.b_amount, 'fixed_balance', 'balance')
                                     TransactionClosed.insert(self.order.email, self.order.base, self.order.quote,self.order.b_amount, self.order.date, self.order.time, self.order.order_type, self.order.side, self.order.stop)
                                     TransactionOpen.delete(self.order.email, self.name, True)
-                                    print('hello')
+                                    #print('hello')
                                     send_email(self.order.email, self.order.base, self.order.quote, self.order.date, self.order.time, self.order.order_type,self.order.side, self.order.b_amount, self.order.stop, self.name)
-                                    print('Hello')
+                                    #print('Hello')
                                     flag = True
                                     self.transaction_complete = 1
                                     break
@@ -112,9 +112,9 @@ class StoplossThread(threading.Thread):
                                     Wallet.do_wallet_updation(self.order.email,self.order.base, self.order.quote, -self.order.b_amount, q_amount, 'fixed_balance', 'balance')
                                     TransactionClosed.insert(self.order.email, self.order.base, self.order.quote,self.order.b_amount, self.order.date, self.order.time, self.order.order_type, self.order.side, self.order.stop)
                                     TransactionOpen.delete(self.order.email, self.name, True)
-                                    print('hello')
+                                    #print('hello')
                                     send_email(self.order.email, self.order.base, self.order.quote, self.order.date, self.order.time, self.order.order_type, self.order.side, self.order.b_amount, self.order.stop, self.name)
-                                    print('Hello')
+                                    #print('Hello')
                                     flag = True
                                     break
                         if flag:
@@ -136,9 +136,9 @@ class StoplossThread(threading.Thread):
                                     Wallet.do_wallet_updation(self.order.email,self.order.base, self.order.quote, -self.order.b_amount, q_amount, 'fixed_balance', 'balance')
                                     TransactionClosed.insert(self.order.email, self.order.base, self.order.quote,self.order.b_amount, self.order.date, self.order.time, self.order.order_type, self.order.side, self.order.stop)
                                     TransactionOpen.delete(self.order.email, self.name, True)
-                                    print('hello')
+                                    #print('hello')
                                     send_email(self.order.email, self.order.base, self.order.quote, self.order.date, self.order.time, self.order.order_type, self.order.side, self.order.b_amount, self.order.stop, self.name)
-                                    print('Hello')
+                                    #print('Hello')
                                     flag = True
                                     break
                         if flag:
