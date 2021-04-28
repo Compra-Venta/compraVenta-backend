@@ -1,7 +1,7 @@
 import smtplib, ssl
 from utils.config import email_password
 
-def send_email(email, base, quote, date, time, order_type, side, b_amount, stop):
+def send_email(email, base, quote, date, time, order_type, side, b_amount, stop,name):
     
     query_email = "teamcompraventa@gmail.com"
     port = 587  # For starttls
@@ -11,10 +11,24 @@ def send_email(email, base, quote, date, time, order_type, side, b_amount, stop)
     password = email_password
     message = f"""\
     Subject: Stoploss Order.
-    Hello {email},
-    Your stoploss order with base {base} , quote {quote}, on date {date} at time {time}
-    and order type {order_type}, side {side} with base amount {b_amount} has been successful.
+
+
+    Hi,
+
+    Your order with order id {name} has been placed successfully.
+    You order details are as follows.
+
+    1. Base asset {base}
+    2. Quote asset {quote}
+    3. Date {date}
+    4. Time {time}
+    5. Order_type {order_type}
+    6. Side {side}
+    7. Base amount {b_amount}
+
     For any queries contact {query_email}.
+
+    Till then keep your trading quest on.
     """
 
     context = ssl.create_default_context()
