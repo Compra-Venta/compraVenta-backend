@@ -13,7 +13,7 @@ currencies without having any fear of losing anything.<br />
 Main **features** of our project are - <br />
 <br />
 ● **Virtual Trading-** Each user will be provided with some virtual money with the help of which a user can trade<br />
-into the choice of his own cryptocurrency which will help a user well versed with cryptocurrency trading gradually.<br />
+into the choice of his own cryptocurrency which will help a user well versed with cryptocurrency trading gradually.<br /><br />
 ● **Real-time price updation-** The actual price of each cryptocurrency will be updated regularly without a long delay<br />
 with the help of API’s.<br /><br />
 ● **Price Prediction of Cryptocurrency-** With the help of machine learning model, we will be able to predict the <br />
