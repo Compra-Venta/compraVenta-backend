@@ -28,14 +28,25 @@ help them accordingly.<br />
 So, we feel that our project will give a kickstart to all the users who are interested in Cryptocurrency trading who don't know where to start from and which will eventually help this cryptocurrency trading industry to reach its potential.
 <br />
 
-**End points** of backend-
-*1* **api.add_resource(RegisterUser, '/register') -** This api is used to register a new user along with the user's details in the form of a document in a collection of the User's database and does not allows same user to register twice, thus reducing redundancy.
-*2* **api.add_resource(UserLogin, '/login') -** This api is used to help users to login into the website by matching the credentials entered by the user with the information present in the database and in return sends jwt token(access and refresh) for authorisation.
-*3* **api.add_resource(Profile,'/myprofile')-** This api helps a user to view it's own profile. User can also check its current rating in the virtual trading platform to analyse themselves.
-*4* **api.add_resource(RefreshLogin, '/reauth') -** This api is used to send access token whenever it tends to expire by using the refresh token which ensures that a user don't have to login again and again and thereby ensuring good user experience.
-*5* **api.add_resource(UpdatePassword, '/password/change') -** This api provides the facility of changing password at his/her own convenience.
-*6* **api.add_resource(Predict,'/predict') -** This api comes in very handy to a user as it helps a user to predict the price of base asset coin in terms of the quote asset coin which helps user to make better decisions to trade coins.
-*7* **api.add_resource(ForgotPassword,'/password/get_new') -** In case a user forgests his /her own password , this api comes in the picture with a rescue operation. It send user a random password at his/her mail with the help of which user can login into the website and can later update the password at its own convenience.
+**End points** of backend-<br />
+*1* **api.add_resource(RegisterUser, '/register') -** This api is used to register a new user along with the <br />
+user's details in the form of a document in a collection of the User's database and does not allows same user to <br />
+register twice, thus reducing redundancy.<br />
+*2* **api.add_resource(UserLogin, '/login') -** This api is used to help users to login into the website by matching<br />
+the credentials entered by the user with the information present in the database and in return sends jwt token<br />
+(access and refresh) for authorisation.<br />
+*3* **api.add_resource(Profile,'/myprofile')-** This api helps a user to view it's own profile. User can also check<br />
+its current rating in the virtual trading platform to analyse themselves.<br />
+*4* **api.add_resource(RefreshLogin, '/reauth') -** This api is used to send access token whenever it tends to <br />
+expire by using the refresh token which ensures that a user don't have to login again and again and thereby ensuring<br />
+good user experience.<br />
+*5* **api.add_resource(UpdatePassword, '/password/change') -** This api provides the facility of changing password <br />
+at his/her own convenience.<br />
+*6* **api.add_resource(Predict,'/predict') -** This api comes in very handy to a user as it helps a user to predict<br />
+the price of base asset coin in terms of the quote asset coin which helps user to make better decisions to trade coins.<br />
+*7* **api.add_resource(ForgotPassword,'/password/get_new') -** In case a user forgests his /her own password ,this<br />
+api comes in the picture with a rescue operation. It send user a random password at his/her mail with the help of <br />
+which user can login into the website and can later update the password at its own convenience.<br />
 *8* **api.add_resource(get_watchlist,'/watchlist') -** This 
 
 
