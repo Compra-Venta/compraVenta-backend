@@ -4,13 +4,14 @@ from bson.objectid import ObjectId
 from models.Wallet_model import Wallet
 from models.OrderStoploss import OrderSL
 from utils.UniqueString import generate_unique_string
+from utils.config import db_password
 class TransactionOpen:
     def __init__(self):
         pass
 
     @classmethod
     def create_open_transaction_history(cls,email):
-        client = MongoClient('localhost', 27017)
+        client = MongoClient(db_password)
         db = client['test-user-db-compra-venta']
         collection = db['test-transaction-open-collection']
         post = {
@@ -55,7 +56,7 @@ class TransactionOpen:
     
     @classmethod
     def insert(cls, email, base, quote, b_amount, date, time, order_type, side, price, id_ = 'default-thread'):
-        client = MongoClient('localhost', 27017)
+        client = MongoClient(db_password)
         db = client['test-user-db-compra-venta']
         collection = db['test-transaction-open-collection']
         order = OrderSL(email, base, quote, date, time, order_type, side, b_amount, price)
@@ -88,7 +89,7 @@ class TransactionOpen:
 
     @classmethod
     def delete(cls, email, id_, completed = False):
-        client = MongoClient('localhost', 27017)
+        client = MongoClient(db_password)
         db = client['test-user-db-compra-venta']
         collection = db['test-transaction-open-collection']
         try:
@@ -129,7 +130,7 @@ class TransactionOpen:
 
     @classmethod
     def get_all_open_transactions(cls, email):
-        client = MongoClient('localhost', 27017)
+        client = MongoClient(db_password)
         db = client['test-user-db-compra-venta']
         collection = db['test-transaction-open-collection']
         result = None
@@ -148,7 +149,7 @@ class TransactionOpen:
 
     @classmethod
     def get_transactions_by_symbol(cls,email, symbol):
-        client = MongoClient('localhost', 27017)
+        client = MongoClient(db_password)
         db = client['test-user-db-compra-venta']
         collection = db['test-transaction-open-collection']
         result = None
@@ -172,7 +173,7 @@ class TransactionOpen:
     @classmethod
     def reset_account(cls,email):
         from utils.StoplossThreads import stopStoplossThread
-        client = MongoClient('localhost', 27017)
+        client = MongoClient(db_password)
         db = client['test-user-db-compra-venta']
         collection = db['test-transaction-open-collection']
         # close all running thread

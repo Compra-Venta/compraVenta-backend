@@ -3,13 +3,14 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 from models.Wallet_model import Wallet
 from utils.UniqueString import generate_unique_string
+from utils.config import db_password
 class TransactionClosed:
     def __init__(self):
         pass
 
     @classmethod
     def create_transaction_history(cls,email):
-        client = MongoClient('localhost', 27017)
+        client = MongoClient(db_password)
         db = client['test-user-db-compra-venta']
         collection = db['test-transaction-closed-collection']
         post = {
@@ -65,7 +66,7 @@ class TransactionClosed:
 
     @classmethod
     def insert(cls, email, base, quote, b_amount, date, time, order_type, side, price):
-        client = MongoClient('localhost', 27017)
+        client = MongoClient(db_password)
         db = client['test-user-db-compra-venta']
         collection = db['test-transaction-closed-collection']
 
@@ -94,7 +95,7 @@ class TransactionClosed:
 
     @classmethod
     def get_all_transactions(cls, email):
-        client = MongoClient('localhost', 27017)
+        client = MongoClient(db_password)
         db = client['test-user-db-compra-venta']
         collection = db['test-transaction-closed-collection']
         result = None
@@ -113,7 +114,7 @@ class TransactionClosed:
 
     @classmethod
     def get_transactions_by_symbol(cls,email, symbol):
-        client = MongoClient('localhost', 27017)
+        client = MongoClient(db_password)
         db = client['test-user-db-compra-venta']
         collection = db['test-transaction-closed-collection']
         result = None
@@ -136,7 +137,7 @@ class TransactionClosed:
 
     @classmethod
     def reset_account(cls,email):
-        client = MongoClient('localhost', 27017)
+        client = MongoClient(db_password)
         db = client['test-user-db-compra-venta']
         collection = db['test-transaction-closed-collection']
         try:

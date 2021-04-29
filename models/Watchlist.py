@@ -1,12 +1,12 @@
 import pymongo
 from pymongo import MongoClient
 from bson.objectid import ObjectId
-
+from utils.config import db_password
 class Watchlist():
 
     @classmethod 
     def reset_account(cls,email):
-        client = MongoClient('localhost', 27017)
+        client = MongoClient(db_password)
         db = client['test-user-db-compra-venta']
         collection = db['test-watchlist-collection']
         try:
@@ -19,7 +19,7 @@ class Watchlist():
 
     @classmethod
     def create_user_watchlist(cls,email):
-        client = MongoClient('localhost', 27017)
+        client = MongoClient(db_password)
         db = client['test-user-db-compra-venta']
         collection = db['test-watchlist-collection']
 
@@ -42,7 +42,7 @@ class Watchlist():
 
     @classmethod
     def add_symbol(cls,email,symbol):
-        client = MongoClient('localhost', 27017)
+        client = MongoClient(db_password)
         db = client['test-user-db-compra-venta']
         collection = db['test-watchlist-collection']
         try:
@@ -68,7 +68,7 @@ class Watchlist():
 
     @classmethod
     def remove_symbol(cls, email, symbol):
-        client = MongoClient('localhost', 27017)
+        client = MongoClient(db_password)
         db = client['test-user-db-compra-venta']
         collection = db['test-watchlist-collection']
         try:
@@ -96,7 +96,7 @@ class Watchlist():
     @classmethod
     def get_all_symbol(cls, email):
         try:
-            client = MongoClient('localhost', 27017)
+            client = MongoClient(db_password)
             db = client['test-user-db-compra-venta']
             collection = db['test-watchlist-collection']
 
