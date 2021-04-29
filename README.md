@@ -15,39 +15,64 @@ Main **features** of our project are - <br />
 ● **Virtual Trading-** Each user will be provided with some virtual money with the help of which a user can trade<br />
 into the choice of his own cryptocurrency which will help a user well versed with cryptocurrency trading gradually.<br />
 ● **Real-time price updation-** The actual price of each cryptocurrency will be updated regularly without a long delay<br />
-with the help of API’s.<br />
+with the help of API’s.<br /><br />
 ● **Price Prediction of Cryptocurrency-** With the help of machine learning model, we will be able to predict the <br />
-price of cryptocurrency and trends in the market.<br />
+price of cryptocurrency and trends in the market.<br /><br />
 ● **User authentication-** Each user will be provided its own username and password and details of the user will <br />
-be stored in the database along with its activities.<br />
+be stored in the database along with its activities.<br /><br />
 ● **Latest News-** Related news regarding cryptocurrencies and cryptocurrency trading is refreshed on our platform<br />
-in order to make users familiar with the environment.<br />
+in order to make users familiar with the environment.<br /><br />
 ● **User Support-** If users need some assistance/clarification regarding cryptocurrency trading, the model will<br />
 help them accordingly.<br />
 <br />
 So, we feel that our project will give a kickstart to all the users who are interested in Cryptocurrency trading who don't know where to start from and which will eventually help this cryptocurrency trading industry to reach its potential.
 <br />
 
-**End points** of backend-<br />
+**End points** of backend-<br /><br />
 *1* **api.add_resource(RegisterUser, '/register') -** This api is used to register a new user along with the <br />
 user's details in the form of a document in a collection of the User's database and does not allows same user to <br />
-register twice, thus reducing redundancy.<br />
+register twice, thus reducing redundancy.<br /><br />
 *2* **api.add_resource(UserLogin, '/login') -** This api is used to help users to login into the website by matching<br />
 the credentials entered by the user with the information present in the database and in return sends jwt token<br />
-(access and refresh) for authorisation.<br />
+(access and refresh) for authorisation.<br /><br />
 *3* **api.add_resource(Profile,'/myprofile')-** This api helps a user to view it's own profile. User can also check<br />
-its current rating in the virtual trading platform to analyse themselves.<br />
+its current rating in the virtual trading platform to analyse themselves.<br /><br />
 *4* **api.add_resource(RefreshLogin, '/reauth') -** This api is used to send access token whenever it tends to <br />
 expire by using the refresh token which ensures that a user don't have to login again and again and thereby ensuring<br />
-good user experience.<br />
+good user experience.<br /><br />
 *5* **api.add_resource(UpdatePassword, '/password/change') -** This api provides the facility of changing password <br />
-at his/her own convenience.<br />
+at his/her own convenience.<br /><br />
 *6* **api.add_resource(Predict,'/predict') -** This api comes in very handy to a user as it helps a user to predict<br />
-the price of base asset coin in terms of the quote asset coin which helps user to make better decisions to trade coins.<br />
+the price of base asset coin in terms of the quote asset coin which helps user to make better decisions to trade coins.<br /><br />
 *7* **api.add_resource(ForgotPassword,'/password/get_new') -** In case a user forgests his /her own password ,this<br />
 api comes in the picture with a rescue operation. It send user a random password at his/her mail with the help of <br />
-which user can login into the website and can later update the password at its own convenience.<br />
-*8* **api.add_resource(get_watchlist,'/watchlist') -** This 
-
+which user can login into the website and can later update the password at its own convenience.<br /><br />
+*8* **api.add_resource(get_watchlist,'/watchlist') -** This api is used to retrieve all the coin pairs from the databse<br />
+regarding which a person to have a close look at to analyse its trend carefully.<br /><br />
+*9* **api.add_resource(add_symbol_to_watchlist, '/watchlist/<string:symbol>') -** This api is used to add a symbol pair <br />
+into the watchlist for careful analysis of that coin pair.<br /><br />
+*10* **api.add_resource(remove_symbol_from_watchlist,'/watchlist/<string:symbol>') -** This api is used to remove a symbol <br />
+pair from the watchlist database in case a user does not wishes to track that coin pair.<br /><br />
+*11* **api.add_resource(get_wallet, '/wallet') -** This api is used to show the wallet of the logged in user from the database<br />
+which contains all the information regardng the amount of coin a user has of a all the currencies available.<br /><br />
+*12* **api.add_resource(get_wallet_currency, '/wallet/<string:coin>') -** This api is used to show the amount of coin of a <br />
+particular currency in which user is interested in.<br /><br />
+*13* **api.add_resource(MarketOrder, '/order/market') -** This api is used to place a market order of a particular coin pair and<br />
+checks the feasibility of the transaction from the wallet of the user and stores the information regarding transaction in the database <br /><br />
+*14* **api.add_resource(get_all_transactions,'/transactions/closed') -** This api is used to retrieve all the market order <br />
+transactions that user has placed from the database <br /><br />
+*15* **api.add_resource(get_all_transactions_by_symbol,'/transactions/closed/<string:coin>') -** This api is used to get all<br />
+the transactions of the logged in user of a particular currency in which user might be interested in.<br /><br />
+*16* **api.add_resource(StoplossOrder, '/order/stoploss') -** This api is used to place a stoploss order of a particular coin<br />
+pair and will place the transaction in stoploss database till the transaction hasn't happened. Once the price of a currency<br />
+hits the desired price then the transaction is deleted from the open transaction database and the transaction details will <br />
+then be placed in closed transaction database.<br /><br />
+*17* **api.add_resource(GetOpenOrders, '/transactions/open') -** This api is used to retrieve all the stoploss order <br />
+transactions that user has placed from the database <br /><br />
+*18* **api.add_resource(UserLogout,'/logout') -** This api helps user to logout from the website by revoking the access <br />
+token of that user and placing that in the blacklist redis server (database) which has the facility to delete the token <br />
+once it expires.<br /><br />
+*19* **api.add_resource(ResetAccount,'/reset') -** This api is used to reset the account of a user in case a user wishes to<br />
+restart its trade from scratch.
 
 
