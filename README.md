@@ -1,7 +1,7 @@
 # Compra-Venta
 
 **About**
-Today’s world has advanced a lot in terms of cryptocurrency exchange or digital currency exchange and the main reason that these digital currencies are overtaking physical currency is that it is not governed by any one single authority and is totally secure since it uses the blockchain technology. It is becoming investors' choice to
+Today’s world has advanced a lot in terms of cryptocurrency exchange or digital currency exchange and the main reason that< /br> these digital currencies are overtaking physical currency is that it is not governed by any one single authority and is totally secure since it uses the blockchain technology. It is becoming investors' choice to
 trade into crypto currencies. But since this concept is relatively new and many people fear to adapt to invest in cryptocurrency, it has still not reached its potential. Many people who trade into this market without any prior knowledge face severe losses and fear using it again. So our aim is to provide a virtual trading platform which will provide budding investors a platform to dive into the trading of cryptocurrencies without having any fear of losing anything.
 
 Main **features** of our project are -
