@@ -51,28 +51,28 @@ which user can login into the website and can later update the password at its o
 regarding which a person to have a close look at to analyse its trend carefully.<br /><br />
 *9* **api.add_resource(add_symbol_to_watchlist, '/watchlist/<string:symbol>') -** This api is used to add a symbol pair <br />
 into the watchlist for careful analysis of that coin pair.<br /><br />
-*10* **api.add_resource(remove_symbol_from_watchlist,'/watchlist/<string:symbol>') -** This api is used to remove a symbol <br />
+*10* **api.add_resource(remove_symbol_from_watchlist,'/watchlist/<string:symbol>') -** This api is used to remove a symbol
 pair from the watchlist database in case a user does not wishes to track that coin pair.<br /><br />
-*11* **api.add_resource(get_wallet, '/wallet') -** This api is used to show the wallet of the logged in user from the database<br />
+*11* **api.add_resource(get_wallet, '/wallet') -** This api is used to show the wallet of the logged in user from the database
 which contains all the information regardng the amount of coin a user has of a all the currencies available.<br /><br />
-*12* **api.add_resource(get_wallet_currency, '/wallet/<string:coin>') -** This api is used to show the amount of coin of a <br />
+*12* **api.add_resource(get_wallet_currency, '/wallet/<string:coin>') -** This api is used to show the amount of coin of a
 particular currency in which user is interested in.<br /><br />
-*13* **api.add_resource(MarketOrder, '/order/market') -** This api is used to place a market order of a particular coin pair and<br />
+*13* **api.add_resource(MarketOrder, '/order/market') -** This api is used to place a market order of a particular coin pair and
 checks the feasibility of the transaction from the wallet of the user and stores the information regarding transaction in the database <br /><br />
-*14* **api.add_resource(get_all_transactions,'/transactions/closed') -** This api is used to retrieve all the market order <br />
+*14* **api.add_resource(get_all_transactions,'/transactions/closed') -** This api is used to retrieve all the market order
 transactions that user has placed from the database <br /><br />
-*15* **api.add_resource(get_all_transactions_by_symbol,'/transactions/closed/<string:coin>') -** This api is used to get all<br />
+*15* **api.add_resource(get_all_transactions_by_symbol,'/transactions/closed/<string:coin>') -** This api is used to get all
 the transactions of the logged in user of a particular currency in which user might be interested in.<br /><br />
-*16* **api.add_resource(StoplossOrder, '/order/stoploss') -** This api is used to place a stoploss order of a particular coin<br />
-pair and will place the transaction in stoploss database till the transaction hasn't happened. Once the price of a currency<br />
-hits the desired price then the transaction is deleted from the open transaction database and the transaction details will <br />
+*16* **api.add_resource(StoplossOrder, '/order/stoploss') -** This api is used to place a stoploss order of a particular coin
+pair and will place the transaction in stoploss database till the transaction hasn't happened. Once the price of a currency
+hits the desired price then the transaction is deleted from the open transaction database and the transaction details will 
 then be placed in closed transaction database.<br /><br />
-*17* **api.add_resource(GetOpenOrders, '/transactions/open') -** This api is used to retrieve all the stoploss order <br />
+*17* **api.add_resource(GetOpenOrders, '/transactions/open') -** This api is used to retrieve all the stoploss order
 transactions that user has placed from the database <br /><br />
-*18* **api.add_resource(UserLogout,'/logout') -** This api helps user to logout from the website by revoking the access <br />
-token of that user and placing that in the blacklist redis server (database) which has the facility to delete the token <br />
+*18* **api.add_resource(UserLogout,'/logout') -** This api helps user to logout from the website by revoking the access 
+token of that user and placing that in the blacklist redis server (database) which has the facility to delete the token 
 once it expires.<br /><br />
-*19* **api.add_resource(ResetAccount,'/reset') -** This api is used to reset the account of a user in case a user wishes to<br />
+*19* **api.add_resource(ResetAccount,'/reset') -** This api is used to reset the account of a user in case a user wishes to
 restart its trade from scratch.
 
 
