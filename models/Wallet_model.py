@@ -1,7 +1,8 @@
 import pymongo
 from pymongo import MongoClient
 #from bson.objectid import objectid
-from utils.config import db_password
+from utils.config import db_url
+
 class Wallet:
 
 	def __init__(self,email,balance,fixed_balance):
@@ -14,7 +15,7 @@ class Wallet:
 	@classmethod
 	def check_balance(cls,email,coin,amount):
 
-		client=MongoClient(db_password)
+		client = MongoClient(db_url)
 		db=client['test-user-db-compra-venta']
 		collection=db['test-user-wallet']
 		try:
@@ -38,7 +39,7 @@ class Wallet:
 	@classmethod
 	def increase_balance_currency_amt(cls,email,coin,amount):
 
-		client=MongoClient(db_password)
+		client = MongoClient(db_url)
 		db=client['test-user-db-compra-venta']
 		collection=db['test-user-wallet']
 
@@ -65,7 +66,7 @@ class Wallet:
 	@classmethod
 	def decrease_balance_currency_amt(cls,email,coin,amount):
 
-		client=MongoClient(db_password)
+		client = MongoClient(db_url)
 		db=client['test-user-db-compra-venta']
 		collection=db['test-user-wallet']
 		try:
@@ -88,7 +89,7 @@ class Wallet:
 	@classmethod
 	def reset_account(cls,email):
         
-		client=MongoClient(db_password)
+		client = MongoClient(db_url)
 		db=client['test-user-db-compra-venta']
 		collection=db['test-user-wallet']
 
@@ -130,7 +131,7 @@ class Wallet:
 	def make_user_wallet(cls,email):
 
 
-		client=MongoClient(db_password)
+		client = MongoClient(db_url)
 		db=client['test-user-db-compra-venta']
 		collection=db['test-user-wallet']
 
@@ -168,7 +169,7 @@ class Wallet:
 	@classmethod
 	def increase_fixed_balance_currency_amt(cls,email,coin,amount):
 
-		client=MongoClient(db_password)
+		client = MongoClient(db_url)
 		db=client['test-user-db-compra-venta']
 		collection=db['test-user-wallet']
 
@@ -190,7 +191,7 @@ class Wallet:
 	@classmethod
 	def decrease_fixed_balance_currency_amt(cls,email,coin,amount):
 
-		client=MongoClient(db_password)
+		client = MongoClient(db_url)
 		db=client['test-user-db-compra-venta']
 		collection=db['test-user-wallet']
 
@@ -214,7 +215,7 @@ class Wallet:
 	@classmethod
 	def get_wallet(cls,email):
 
-		client=MongoClient(db_password)
+		client = MongoClient(db_url)
 		db=client['test-user-db-compra-venta']
 		collection=db['test-user-wallet']
 		try:
@@ -232,7 +233,7 @@ class Wallet:
 	def get_wallet_currency(cls,email,coin):
 
 		
-		client=MongoClient(db_password)
+		client = MongoClient(db_url)
 		db=client['test-user-db-compra-venta']
 		collection=db['test-user-wallet']
 
@@ -251,7 +252,7 @@ class Wallet:
 	@classmethod
 	def do_wallet_updation(cls, email, coin_1, coin_2, amt_1, amt_2, source_1, source_2):
 
-		client=MongoClient(db_password)
+		client = MongoClient(db_url)
 		db=client['test-user-db-compra-venta']
 		collection=db['test-user-wallet']
 		try:

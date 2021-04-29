@@ -19,16 +19,16 @@ def send_email(email, base, quote, date, time, order_type, side, b_amount, stop,
     You order details are as follows.
 
     1. Base asset: {base}
-    2. Quote asset: {quote}
+    2. Quote: asset {quote}
     3. Date: {date}
     4. Time: {time}
-    5. Order_type: {order_type}
+    5. Order Type: {order_type}
     6. Side: {side}
     7. Base amount: {b_amount}
 
     For any queries contact {query_email}.
 
-    Till then keep your trading quest on.!!
+    Till then keep your trading quest on.
     """
 
     context = ssl.create_default_context()
