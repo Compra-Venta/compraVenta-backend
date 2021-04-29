@@ -1,10 +1,16 @@
 # Compra-Venta
 
-**About**
-Today’s world has advanced a lot in terms of cryptocurrency exchange or digital currency exchange and the main reason that<br /> these digital currencies are overtaking physical currency is that it is not governed by any one single authority and is totally secure since it uses the blockchain technology. It is becoming investors' choice to
-trade into crypto currencies. But since this concept is relatively new and many people fear to adapt to invest in cryptocurrency, it has still not reached its potential. Many people who trade into this market without any prior knowledge face severe losses and fear using it again. So our aim is to provide a virtual trading platform which will provide budding investors a platform to dive into the trading of cryptocurrencies without having any fear of losing anything.
+**About** <br />
+Today’s world has advanced a lot in terms of cryptocurrency exchange or digital currency exchange and <br />
+the main reason that these digital currencies are overtaking physical currency is that it is not governed <br />
+by any one single authority and is totally secure since it uses the blockchain technology. It is becoming <br />
+investors' choice to trade into crypto currencies. But since this concept is relatively new and many people fear<br />
+to adapt to invest in cryptocurrency, it has still not reached its potential. Many people who trade into this <br />
+market without any prior knowledge face severe losses and fear using it again. So our aim is to provide a virtual<br /> 
+trading platform which will provide budding investors a platform to dive into the trading of cryptocurrencies without<br />
+having any fear of losing anything.<br />
 
-Main **features** of our project are -
+Main **features** of our project are - <br />
 
 ● **Virtual Trading-** Each user will be provided with some virtual money with the help of which a user can trade into the choice of his own cryptocurrency which will help a user well versed with cryptocurrency trading gradually.
 ● **Real-time price updation-** The actual price of each cryptocurrency will be updated regularly without a long delay with the help of API’s.
