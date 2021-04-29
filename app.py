@@ -58,5 +58,5 @@ api.add_resource(GetOpenOrders, '/transactions/open')
 api.add_resource(UserLogout,'/logout')
 api.add_resource(ResetAccount,'/reset')
 if __name__ == '__main__':
-    app.run(debug = True)
+    app.run(debug = False)
 
