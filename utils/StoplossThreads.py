@@ -49,7 +49,7 @@ class StoplossThread(threading.Thread):
                         m = data.copy()
                         for d in m:
                             if d['s'] == symbol:
-                                # print(d['c'])
+                                print(d['c'])
                                 if float(d['c']) >= stop:
                                     print('done at -', d['c'])
                                     from models.TransactionClosed import TransactionClosed
@@ -74,7 +74,7 @@ class StoplossThread(threading.Thread):
                         m = data.copy()
                         for d in m:
                             if d['s'] == symbol:
-                                # print(d['c'])
+                                print(d['c'])
                                 if float(d['c']) < stop:
                                     print('done at -', d['c'])
                                     from models.TransactionClosed import TransactionClosed
@@ -101,7 +101,7 @@ class StoplossThread(threading.Thread):
                         m = data.copy()
                         for d in m:
                             if d['s'] == symbol:
-                                # print(d['c'])
+                                print(d['c'])
                                 if float(d['c']) <= stop:
                                     print('done at -', d['c'])
                                     from models.TransactionClosed import TransactionClosed
@@ -125,7 +125,7 @@ class StoplossThread(threading.Thread):
                         m = data.copy()
                         for d in m:
                             if d['s'] == symbol:
-                                # print(d['c'])
+                                print(d['c'])
                                 if float(d['c']) > stop:
                                     print('done at -', d['c'])
                                     from models.TransactionClosed import TransactionClosed
