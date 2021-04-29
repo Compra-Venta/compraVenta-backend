@@ -11,14 +11,22 @@ a virtual trading platform which will provide budding investors a platform to di
 currencies without having any fear of losing anything.<br />
 
 Main **features** of our project are - <br />
-
-● **Virtual Trading-** Each user will be provided with some virtual money with the help of which a user can trade into the choice of his own cryptocurrency which will help a user well versed with cryptocurrency trading gradually.
-● **Real-time price updation-** The actual price of each cryptocurrency will be updated regularly without a long delay with the help of API’s.
-● **Price Prediction of Cryptocurrency-** With the help of machine learning model, we will be able to predict the price of cryptocurrency and trends in the market.
-● **User authentication-** Each user will be provided its own username and password and details of the user will be stored in the database along with its activities.
-● **Latest News-** Related news regarding cryptocurrencies and cryptocurrency trading is refreshed on our platform in order to make users familiar with the environment.
-● **User Support-** If users need some assistance/clarification regarding cryptocurrency trading, the model will help them accordingly.
+<br />
+● **Virtual Trading-** Each user will be provided with some virtual money with the help of which a user can trade<br />
+into the choice of his own cryptocurrency which will help a user well versed with cryptocurrency trading gradually.<br />
+● **Real-time price updation-** The actual price of each cryptocurrency will be updated regularly without a long delay<br />
+with the help of API’s.<br />
+● **Price Prediction of Cryptocurrency-** With the help of machine learning model, we will be able to predict the <br />
+price of cryptocurrency and trends in the market.<br />
+● **User authentication-** Each user will be provided its own username and password and details of the user will <br />
+be stored in the database along with its activities.<br />
+● **Latest News-** Related news regarding cryptocurrencies and cryptocurrency trading is refreshed on our platform<br />
+in order to make users familiar with the environment.<br />
+● **User Support-** If users need some assistance/clarification regarding cryptocurrency trading, the model will<br />
+help them accordingly.<br />
+<br />
 So, we feel that our project will give a kickstart to all the users who are interested in Cryptocurrency trading who don't know where to start from and which will eventually help this cryptocurrency trading industry to reach its potential.
+<br />
 
 **End points** of backend-
 *1* **api.add_resource(RegisterUser, '/register') -** This api is used to register a new user along with the user's details in the form of a document in a collection of the User's database and does not allows same user to register twice, thus reducing redundancy.
