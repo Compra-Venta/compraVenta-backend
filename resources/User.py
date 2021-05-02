@@ -19,7 +19,7 @@ from utils import blocklist
 from datetime import timedelta
 
 
-ACCESS_EXPIRES = timedelta(minutes=1)
+ACCESS_EXPIRES = timedelta(hours = 1)
 
 class RegisterUser(Resource):
     parser = reqparse.RequestParser()
