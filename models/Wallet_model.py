@@ -1,7 +1,8 @@
 import pymongo
 from pymongo import MongoClient
-#from bson.objectid import objectid
 from utils.config import db_url
+from decimal import Decimal, getcontext
+getcontext().prec = 8
 
 class Wallet:
 
@@ -256,7 +257,10 @@ class Wallet:
 		db=client['test-user-db-compra-venta']
 		collection=db['test-user-wallet']
 		try:
-			collection.update_one({'email':email}, {"$inc":{source_1+"."+coin_1: amt_1, source_2+"."+coin_2:amt_2}})
+			result = collection.find_one({"email":email})
+			a = result[source_1][coin_1]
+			b = result[source_2][coin_2]
+			collection.update_one({'email':email}, {"$set":{source_1+"."+coin_1: float(Decimal(a) + Decimal(amt_1)), source_2+"."+coin_2: float(Decimal(b) + Decimal(amt_2))}})
 			client.close()
 			return 1
 		except:
