@@ -3,7 +3,7 @@ from flask_restful import Resource, Api, reqparse
 from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
-from utils.encryption import key, encrypt_password, decrypt_password
+from utils.encryption import key, encrypt_password, decrypt_password, encrypt_token
 from models.User import User
 from models.Watchlist import Watchlist 
 from models.Wallet_model import Wallet
@@ -90,7 +90,7 @@ class GetToken(Resource):
         else:
             token = generate_password()
             send_token(email, "User", token)
-            return {"token":token}, 200
+            return {"token":encrypt_token(token)}, 200
 
 class UserLogin(Resource):
     
