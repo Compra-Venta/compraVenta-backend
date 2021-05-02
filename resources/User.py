@@ -12,6 +12,7 @@ from models.TransactionOpen import TransactionOpen
 from utils.recovery_email import send_recovery_email
 from utils.password_generator import generate_password
 from utils.blacklist import BLACKLIST
+from utils.send_token import send_token
 from flask_jwt_extended import get_jwt
 from flask_jwt_extended import JWTManager
 from utils import blocklist
@@ -73,6 +74,23 @@ class RegisterUser(Resource):
         else:
             return {"message": "Email ID already registered"}, 409
 
+class GetToken(Resource):
+
+    parser = reqparse.RequestParser()
+    parser.add_argument('email',
+                        type = str,
+                        required = True
+                        )
+    def post(self):
+        data = self.parser.parse_args()
+        email = data['email']
+        result, _id = User.find_by_email(email)
+        if result:
+            return {"error":"User already exists"}, 400
+        else:
+            token = generate_password()
+            send_token(email, "User", token)
+            return {"token":token}, 200
 
 class UserLogin(Resource):
     
