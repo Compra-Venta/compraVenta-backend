@@ -7,7 +7,7 @@ from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 from resources.Wallet_resource import get_wallet, get_wallet_currency
 from resources.Transactions import MarketOrder, get_all_transactions, get_all_transactions_by_symbol
-from resources.User import RegisterUser, UserLogin, RefreshLogin, UpdatePassword, ForgotPassword, Profile , UserLogout, ResetAccount
+from resources.User import RegisterUser, UserLogin, RefreshLogin, UpdatePassword, ForgotPassword, Profile , UserLogout, ResetAccount, GetToken
 from resources.Prediction import Predict
 from resources.StoplossOrders import StoplossOrder, GetOpenOrders
 from resources.Watchlist import get_watchlist, add_symbol_to_watchlist, remove_symbol_from_watchlist
@@ -58,6 +58,7 @@ api.add_resource(StoplossOrder, '/order/stoploss')
 api.add_resource(GetOpenOrders, '/transactions/open')
 api.add_resource(UserLogout,'/logout')
 api.add_resource(ResetAccount,'/reset')
+api.add_resource(GetToken,'/validate')
 if __name__ == '__main__':
     app.run(debug = False)
 
