@@ -10,7 +10,7 @@ def send_token(email, name, token):
     receiver_email = email
     password = email_password
     message = f"""\
-    Subject: Password recovery.
+    Subject: Registration.
 
     Hello {name},
     {token} is your registration token for your email verification.
