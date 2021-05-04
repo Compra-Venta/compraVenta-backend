@@ -1,6 +1,6 @@
 # Compra-Venta
 
-A Virtual Crypto Currency Trading Platform (frontend)
+A Virtual Crypto Currency Trading Platform (backend)
 
 
  **Compra Venta is live at** https://compraventalive.herokuapp.com/ 
@@ -38,7 +38,7 @@ or want to furnish their knowledge, we have a provided a platform to learn
 	“message”: “registered successfully”
 }
 ```
-* **’/login** ``` POST ```-  This api is used to help users to login into the website by matching
+* **’/login'** ``` POST ```-  This api is used to help users to login into the website by matching
 the credentials entered by the user with the information present in the database and in return sends jwt token.
 
 ```
@@ -48,7 +48,7 @@ the credentials entered by the user with the information present in the database
 }
 
 ```
-* **’/myprofile** ``` GET ```-   This api helps a user to view it's own profile. User can also check its current rating in the virtual trading platform to analyse themselves.
+* **’/myprofile'** ``` GET ```-   This api helps a user to view it's own profile. User can also check its current rating in the virtual trading platform to analyse themselves.
 
 ```
 {
@@ -61,7 +61,7 @@ the credentials entered by the user with the information present in the database
 }
 
 ```
-* **’/reauth** ``` GET ```-  This api is used to send access token whenever it tends to
+* **’/reauth'** ``` GET ```-  This api is used to send access token whenever it tends to
 expire by using the refresh token which ensures that a user don't have to login again and again and thereby ensuring.
 
 ```
@@ -75,7 +75,7 @@ expire by using the refresh token which ensures that a user don't have to login 
 }
 
 ```
-* **’/password/change** ``` POST ```-  This api provides the facility of changing password 
+* **’/password/change'** ``` POST ```-  This api provides the facility of changing password 
 at his/her own convenience.
 
 ```
@@ -84,7 +84,7 @@ at his/her own convenience.
 }
 
 ```
-* **’/password/get_new** ``` PUT ```-  In case a user forgests his /her own password ,this
+* **’/password/get_new'** ``` PUT ```-  In case a user forgests his /her own password ,this
 api comes in the picture with a rescue operation. It send user a random password at his/her mail with the help of which user can login into the website and can later update the password at its own convenience.
 
 
@@ -94,7 +94,7 @@ api comes in the picture with a rescue operation. It send user a random password
 }
 
 ```
-* **’/watchlist** ``` GET ```-  This api is used to retrieve all the coin pairs from the databse<br />
+* **’/watchlist'** ``` GET ```-  This api is used to retrieve all the coin pairs from the databse<br />
 regarding which a person to have a close look at to analyse its trend carefully.
 
 ```
@@ -103,7 +103,7 @@ regarding which a person to have a close look at to analyse its trend carefully.
 }
 
 ```
-* **’/watchlist/<string:symbol>** ``` POST ```-  This api is used to add a symbol pair
+* **’/watchlist/<string:symbol>'** ``` POST ```-  This api is used to add a symbol pair
 into the watchlist for careful analysis of that coin pair.
 
 ```
@@ -112,7 +112,7 @@ into the watchlist for careful analysis of that coin pair.
 }
 
 ```
-* **’/watchlist/<string:symbol>** ``` DEL ```-  This api is used to remove a symbol
+* **’/watchlist/<string:symbol>'** ``` DEL ```-  This api is used to remove a symbol
 pair from the watchlist database in case a user does not wishes to track that coin pair.
 
 ```
@@ -121,7 +121,7 @@ pair from the watchlist database in case a user does not wishes to track that co
 }
 
 ```
-* **’/wallet** ``` GET ```-  This api is used to show the wallet of the logged in user from the database which contains all the information regardng the amount of coin a user has of a all the currencies available
+* **’/wallet'** ``` GET ```-  This api is used to show the wallet of the logged in user from the database which contains all the information regardng the amount of coin a user has of a all the currencies available
 
 ```
 {
@@ -146,7 +146,7 @@ pair from the watchlist database in case a user does not wishes to track that co
 }
 
 ```
-* **’/wallet/<string:coin>** ``` GET ```-  This api is used to show the amount of coin of a
+* **’/wallet/<string:coin>'** ``` GET ```-  This api is used to show the amount of coin of a
 particular currency in which user is interested in.
 ```
 {
@@ -156,7 +156,7 @@ particular currency in which user is interested in.
 }
 
 ```
-* **’/order/market** ``` POST ```-  This api is used to place a market order of a particular coin pair and checks the feasibility of the transaction from the wallet of the user and stores the information regarding transaction in the database 
+* **’/order/market'** ``` POST ```-  This api is used to place a market order of a particular coin pair and checks the feasibility of the transaction from the wallet of the user and stores the information regarding transaction in the database 
 
 ```
 {
@@ -165,7 +165,7 @@ particular currency in which user is interested in.
 }
 
 ```
-* **’/transactions/closed** ``` GET ```-  This api is used to retrieve all the market order
+* **’/transactions/closed'** ``` GET ```-  This api is used to retrieve all the market order
 transactions that user has placed from the database.
 
 ```
@@ -186,7 +186,7 @@ transactions that user has placed from the database.
 }
 
 ```
-* **’/transactions/closed/<string:coin>** ``` GET ```-  This api is used to get all the transactions of the logged in user of a particular currency in which user might be interested in.
+* **’/transactions/closed/<string:coin>'** ``` GET ```-  This api is used to get all the transactions of the logged in user of a particular currency in which user might be interested in.
 ```
 {
     "closed": [
@@ -205,7 +205,7 @@ transactions that user has placed from the database.
 }
 
 ```
-* **’/order/stoploss** ``` POST ```- This api is used to place a stoploss order of a particular coin
+* **’/order/stoploss'** ``` POST ```- This api is used to place a stoploss order of a particular coin
 pair and will place the transaction in stoploss database till the transaction hasn't happened. Once the price of a currency hits the desired price then the transaction is deleted from the open transaction database and the transaction details will  then be placed in closed transaction database.<
 
 ```
@@ -215,7 +215,7 @@ pair and will place the transaction in stoploss database till the transaction ha
 }
 
 ```
-* **’/transactions/open** ``` GET ```-  This api is used to retrieve all the stoploss order
+* **’/transactions/open'** ``` GET ```-  This api is used to retrieve all the stoploss order
 transactions that user has placed from the database.
 
 ```
@@ -236,7 +236,7 @@ transactions that user has placed from the database.
 }
 
 ```
-* **’/order/stoploss** ``` DEL ```-  This api is used to delete a stoploss order.
+* **’/order/stoploss'** ``` DEL ```-  This api is used to delete a stoploss order.
 ```
 {
     "status": "successful",
@@ -244,16 +244,22 @@ transactions that user has placed from the database.
 }
 
 ```
-* **’/register** ``` GET ```-  This api is used to register a new user along with the user's details in the form of a document in a collection of the User's database and does not allows same user to register twice, thus reducing redundancy.
+* **’/reset'** ``` PUT ```-  This api is used to reset a user's account.
 ```
 {
-	“message”: “registered successfully”
+    "msg": "Account reset successful"
 }
 ```
-* **’/register** ``` GET ```-  This api is used to register a new user along with the user's details in the form of a document in a collection of the User's database and does not allows same user to register twice, thus reducing redundancy.
+* **’/predict'*'* ``` GET ```-  This api is used to predict the price of entered base currency in terms of entered quote currency.
 ```
 {
-	“message”: “registered successfully”
+    "prediction": 56340.60385972957
+}
+```
+* **’/logout'*'* ``` GET ```-  This api is used to revoke access token and logout the current user.
+```
+{
+    "msg": "Access token revoked"
 }
 ```
 
