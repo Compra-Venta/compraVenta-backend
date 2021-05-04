@@ -250,13 +250,13 @@ transactions that user has placed from the database.
     "msg": "Account reset successful"
 }
 ```
-* **’/predict'*'* ``` GET ```-  This api is used to predict the price of entered base currency in terms of entered quote currency.
+* **’/predict'** ``` GET ```-  This api is used to predict the price of entered base currency in terms of entered quote currency.
 ```
 {
     "prediction": 56340.60385972957
 }
 ```
-* **’/logout'*'* ``` GET ```-  This api is used to revoke access token and logout the current user.
+* **’/logout'** ``` GET ```-  This api is used to revoke access token and logout the current user.
 ```
 {
     "msg": "Access token revoked"
