@@ -256,7 +256,7 @@ transactions that user has placed from the database.
     "prediction": 56340.60385972957
 }
 ```
-* **’/logout'** ``` GET ```-  This api is used to revoke access token and logout the current user.
+* **’/logout'** ``` POST ```-  This api is used to revoke access token and logout the current user.
 ```
 {
     "msg": "Access token revoked"
