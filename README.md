@@ -1,78 +1,297 @@
 # Compra-Venta
 
-**About** <br />
-Today’s world has advanced a lot in terms of cryptocurrency exchange or digital currency exchange and 
-the main reason that these digital currencies are overtaking physical currency is that it is not governed 
-by any one single authority and is totally secure since it uses the blockchain technology. It is becoming 
-investors' choice to trade into crypto currencies. But since this concept is relatively new and many people
-fear to adapt to invest in cryptocurrency, it has still not reached its potential. Many people who trade into
-this market without any prior knowledge face severe losses and fear using it again. So our aim is to provide 
-a virtual trading platform which will provide budding investors a platform to dive into the trading of crypto-
-currencies without having any fear of losing anything.<br />
+A Virtual Crypto Currency Trading Platform (frontend)
 
-Main **features** of our project are - <br />
-<br />
-● **Virtual Trading-** Each user will be provided with some virtual money with the help of which a user can trade<br />
-into the choice of his own cryptocurrency which will help a user well versed with cryptocurrency trading gradually.<br /><br />
-● **Real-time price updation-** The actual price of each cryptocurrency will be updated regularly without a long delay<br />
-with the help of API’s.<br /><br />
-● **Price Prediction of Cryptocurrency-** With the help of machine learning model, we will be able to predict the <br />
-price of cryptocurrency and trends in the market.<br /><br />
-● **User authentication-** Each user will be provided its own username and password and details of the user will <br />
-be stored in the database along with its activities.<br /><br />
-● **Latest News-** Related news regarding cryptocurrencies and cryptocurrency trading is refreshed on our platform<br />
-in order to make users familiar with the environment.<br /><br />
-● **User Support-** If users need some assistance/clarification regarding cryptocurrency trading, the model will<br />
-help them accordingly.<br />
-<br />
-So, we feel that our project will give a kickstart to all the users who are interested in Cryptocurrency trading who don't know where to start from and which will eventually help this cryptocurrency trading industry to reach its potential.
-<br />
 
-**End points** of backend-<br /><br />
-*1* **api.add_resource(RegisterUser, '/register') -** This api is used to register a new user along with the <br />
-user's details in the form of a document in a collection of the User's database and does not allows same user to <br />
-register twice, thus reducing redundancy.<br /><br />
-*2* **api.add_resource(UserLogin, '/login') -** This api is used to help users to login into the website by matching<br />
-the credentials entered by the user with the information present in the database and in return sends jwt token<br />
-(access and refresh) for authorisation.<br /><br />
-*3* **api.add_resource(Profile,'/myprofile')-** This api helps a user to view it's own profile. User can also check<br />
-its current rating in the virtual trading platform to analyse themselves.<br /><br />
-*4* **api.add_resource(RefreshLogin, '/reauth') -** This api is used to send access token whenever it tends to <br />
-expire by using the refresh token which ensures that a user don't have to login again and again and thereby ensuring<br />
-good user experience.<br /><br />
-*5* **api.add_resource(UpdatePassword, '/password/change') -** This api provides the facility of changing password <br />
-at his/her own convenience.<br /><br />
-*6* **api.add_resource(Predict,'/predict') -** This api comes in very handy to a user as it helps a user to predict<br />
-the price of base asset coin in terms of the quote asset coin which helps user to make better decisions to trade coins.<br /><br />
-*7* **api.add_resource(ForgotPassword,'/password/get_new') -** In case a user forgests his /her own password ,this<br />
-api comes in the picture with a rescue operation. It send user a random password at his/her mail with the help of <br />
-which user can login into the website and can later update the password at its own convenience.<br /><br />
-*8* **api.add_resource(get_watchlist,'/watchlist') -** This api is used to retrieve all the coin pairs from the databse<br />
-regarding which a person to have a close look at to analyse its trend carefully.<br /><br />
-*9* **api.add_resource(add_symbol_to_watchlist, '/watchlist/<string:symbol>') -** This api is used to add a symbol pair <br />
-into the watchlist for careful analysis of that coin pair.<br /><br />
-*10* **api.add_resource(remove_symbol_from_watchlist,'/watchlist/<string:symbol>') -** This api is used to remove a symbol
-pair from the watchlist database in case a user does not wishes to track that coin pair.<br /><br />
-*11* **api.add_resource(get_wallet, '/wallet') -** This api is used to show the wallet of the logged in user from the database
-which contains all the information regardng the amount of coin a user has of a all the currencies available.<br /><br />
-*12* **api.add_resource(get_wallet_currency, '/wallet/<string:coin>') -** This api is used to show the amount of coin of a
-particular currency in which user is interested in.<br /><br />
-*13* **api.add_resource(MarketOrder, '/order/market') -** This api is used to place a market order of a particular coin pair and
-checks the feasibility of the transaction from the wallet of the user and stores the information regarding transaction in the database <br /><br />
-*14* **api.add_resource(get_all_transactions,'/transactions/closed') -** This api is used to retrieve all the market order
-transactions that user has placed from the database <br /><br />
-*15* **api.add_resource(get_all_transactions_by_symbol,'/transactions/closed/<string:coin>') -** This api is used to get all
-the transactions of the logged in user of a particular currency in which user might be interested in.<br /><br />
-*16* **api.add_resource(StoplossOrder, '/order/stoploss') -** This api is used to place a stoploss order of a particular coin
-pair and will place the transaction in stoploss database till the transaction hasn't happened. Once the price of a currency
-hits the desired price then the transaction is deleted from the open transaction database and the transaction details will 
-then be placed in closed transaction database.<br /><br />
-*17* **api.add_resource(GetOpenOrders, '/transactions/open') -** This api is used to retrieve all the stoploss order
-transactions that user has placed from the database <br /><br />
-*18* **api.add_resource(UserLogout,'/logout') -** This api helps user to logout from the website by revoking the access 
-token of that user and placing that in the blacklist redis server (database) which has the facility to delete the token 
-once it expires.<br /><br />
-*19* **api.add_resource(ResetAccount,'/reset') -** This api is used to reset the account of a user in case a user wishes to
-restart its trade from scratch.
+ **Compra Venta is live at** https://compraventalive.herokuapp.com/ 
+***
+# Motivation
+
+Our project is a website based on a virtual trading platform which will provide
+budding investors a platform to dive into the trading of cryptocurrencies without
+having any fear of losing anything.
+***
+# Features
+* **User authentication**- Each user will be provided its own username and
+password and details of the user will be stored in the database along with its
+activities.
+* **Virtual Trading**- Each user will be provided with some virtual money with
+the help of which a user can trade into the choice of his own cryptocurrency
+which will help a user well versed with cryptocurrency trading gradually.
+* **Real-time price updation**- The actual price of each cryptocurrency will be
+updated regularly without a long delay with the help of API’s.
+* **Price Prediction of Cryptocurrency**- With the help of machine learning
+model, we will be able to predict the price of cryptocurrency and trends in the
+market.
+* **Latest News**- Related news regarding cryptocurrencies and cryptocurrency
+trading is refreshed on our platform in order to make users familiar with the
+environment.
+* **User Support**- If users need some assistance/clarification regarding
+cryptocurrency trading, the model will help them accordingly.
+* **Learn** - If users are not familiar about cryptotrading and other features
+or want to furnish their knowledge, we have a provided a platform to learn
+***
+# Backend Endpoints
+* **’/register** ``` GET ```-  This api is used to register a new user along with the user's details in the form of a document in a collection of the User's database and does not allows same user to register twice, thus reducing redundancy.
+```
+{
+	“message”: “registered successfully”
+}
+```
+* **’/login** ``` POST ```-  This api is used to help users to login into the website by matching
+the credentials entered by the user with the information present in the database and in return sends jwt token.
+
+```
+{
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6dHJ1ZSwiaWF0IjoxNjIwMTIwNTI1LCJqdGkiOiIwNGU4NGQ0My0zMjlmLTRlYzMtODIzOC03MzAzYzFjMjkyMjUiLCJuYmYiOjE2MjAxMjA1MjUsInR5cGUiOiJhY2Nlc3MiLCJzdWIiOiJrYXJhbnN0YXIyMzk3QGdtYWlsLmNvbSIsImV4cCI6MTYyMDEyNDEyNX0.I-xvXj81i9WXW6eBcF3nroHLf4eCtVuuSY6FpZNBYyI",
+    "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYyMDEyMDUyNSwianRpIjoiNjJiNTZhOGMtNjc1Mi00OTVkLTgyNmEtMzFlNjNlZDM1ZGU3IiwibmJmIjoxNjIwMTIwNTI1LCJ0eXBlIjoicmVmcmVzaCIsInN1YiI6ImthcmFuc3RhcjIzOTdAZ21haWwuY29tIiwiZXhwIjoxNjIyNzEyNTI1fQ.krd2aNnphJDnVdp0jWdg4WopVvrqlho3q07Hm76ng-E"
+}
+
+```
+* **’/myprofile** ``` GET ```-   This api helps a user to view it's own profile. User can also check its current rating in the virtual trading platform to analyse themselves.
+
+```
+{
+    "user_id": "6091132cfdbf4ca0c1d61305",
+    "email": "karanstar2397@gmail.com",
+    "name": "Jaskaran Singh",
+    "age": 20,
+    "country": "India",
+    "PhoneNo": "9646411782"
+}
+
+```
+* **’/reauth** ``` GET ```-  This api is used to send access token whenever it tends to
+expire by using the refresh token which ensures that a user don't have to login again and again and thereby ensuring.
+
+```
+{
+    "user_id": "6091132cfdbf4ca0c1d61305",
+    "email": "karanstar2397@gmail.com",
+    "name": "Jaskaran Singh",
+    "age": 20,
+    "country": "India",
+    "PhoneNo": "9646411782"
+}
+
+```
+* **’/password/change** ``` POST ```-  This api provides the facility of changing password 
+at his/her own convenience.
+
+```
+{
+    "message": "Password changed successfully."
+}
+
+```
+* **’/password/get_new** ``` PUT ```-  In case a user forgests his /her own password ,this
+api comes in the picture with a rescue operation. It send user a random password at his/her mail with the help of which user can login into the website and can later update the password at its own convenience.
+
+
+```
+{
+    "message": "Password Changed"
+}
+
+```
+* **’/watchlist** ``` GET ```-  This api is used to retrieve all the coin pairs from the databse<br />
+regarding which a person to have a close look at to analyse its trend carefully.
+
+```
+{
+    "watchlist": []
+}
+
+```
+* **’/watchlist/<string:symbol>** ``` POST ```-  This api is used to add a symbol pair
+into the watchlist for careful analysis of that coin pair.
+
+```
+{
+    "message": "symbol added to watchlist"
+}
+
+```
+* **’/watchlist/<string:symbol>** ``` DEL ```-  This api is used to remove a symbol
+pair from the watchlist database in case a user does not wishes to track that coin pair.
+
+```
+{
+    "message": "symbol removed from watchlist"
+}
+
+```
+* **’/wallet** ``` GET ```-  This api is used to show the wallet of the logged in user from the database which contains all the information regardng the amount of coin a user has of a all the currencies available
+
+```
+{
+    "email": "karanstar2397@gmail.com",
+    "profit": 50000.0,
+    "balance": {
+        "BTC": 0.0,
+        "ETH": 0.0,
+        "LTC": 0.0,
+        "XRP": 0.0,
+        "BNB": 0.0,
+        "USDT": 50000.0
+    },
+    "fixed_balance": {
+        "BTC": 0.0,
+        "ETH": 0.0,
+        "LTC": 0.0,
+        "XRP": 0.0,
+        "BNB": 0.0,
+        "USDT": 0.0
+    }
+}
+
+```
+* **’/wallet/<string:coin>** ``` GET ```-  This api is used to show the amount of coin of a
+particular currency in which user is interested in.
+```
+{
+    "coin": "BTC",
+    "balance": 0.0,
+    "fixed_balance": 0.0
+}
+
+```
+* **’/order/market** ``` POST ```-  This api is used to place a market order of a particular coin pair and checks the feasibility of the transaction from the wallet of the user and stores the information regarding transaction in the database 
+
+```
+{
+    "status": "successful",
+    "order_id": "fa45bf8ffc1f4e01915f1620123173karanstar2397@gmail"
+}
+
+```
+* **’/transactions/closed** ``` GET ```-  This api is used to retrieve all the market order
+transactions that user has placed from the database.
+
+```
+{
+    "closed": [
+        {
+            "order_id": "fa45bf8ffc1f4e01915f1620123173karanstar2397@gmail",
+            "base": "BTC",
+            "quote": "USDT",
+            "b_amount": 0.5,
+            "price": 56403.82,
+            "date": "2021-04-17",
+            "time": "16:34:15",
+            "order_type": "M",
+            "side": "BUY"
+        }
+    ]
+}
+
+```
+* **’/transactions/closed/<string:coin>** ``` GET ```-  This api is used to get all the transactions of the logged in user of a particular currency in which user might be interested in.
+```
+{
+    "closed": [
+        {
+            "order_id": "fa45bf8ffc1f4e01915f1620123173karanstar2397@gmail",
+            "base": "BTC",
+            "quote": "USDT",
+            "b_amount": 0.5,
+            "price": 56403.82,
+            "date": "2021-04-17",
+            "time": "16:34:15",
+            "order_type": "M",
+            "side": "BUY"
+        }
+    ]
+}
+
+```
+* **’/order/stoploss** ``` POST ```- This api is used to place a stoploss order of a particular coin
+pair and will place the transaction in stoploss database till the transaction hasn't happened. Once the price of a currency hits the desired price then the transaction is deleted from the open transaction database and the transaction details will  then be placed in closed transaction database.<
+
+```
+{
+    "status": "successful",
+    "order_id": "12d59aa787c848f5b6ea1620123546karanstar2397@gmail"
+}
+
+```
+* **’/transactions/open** ``` GET ```-  This api is used to retrieve all the stoploss order
+transactions that user has placed from the database.
+
+```
+{
+    "open": [
+        {
+            "order_id": "12d59aa787c848f5b6ea1620123546karanstar2397@gmail",
+            "base": "BTC",
+            "quote": "USDT",
+            "b_amount": 0.01,
+            "price": 54268.0,
+            "date": "2021-04-17",
+            "time": "15:48:15",
+            "order_type": "TP",
+            "side": "BUY"
+        }
+    ]
+}
+
+```
+* **’/order/stoploss** ``` DEL ```-  This api is used to delete a stoploss order.
+```
+{
+    "status": "successful",
+    "message": "Stoploss order with order id 12d59aa787c848f5b6ea1620123546karanstar2397@gmail cancelled."
+}
+
+```
+* **’/register** ``` GET ```-  This api is used to register a new user along with the user's details in the form of a document in a collection of the User's database and does not allows same user to register twice, thus reducing redundancy.
+```
+{
+	“message”: “registered successfully”
+}
+```
+* **’/register** ``` GET ```-  This api is used to register a new user along with the user's details in the form of a document in a collection of the User's database and does not allows same user to register twice, thus reducing redundancy.
+```
+{
+	“message”: “registered successfully”
+}
+```
+
+
+***
+# External API Reference
+### **CandleStick Historical Data**
+```
+     https://api.binance.com/api/v3/klines?symbol={symbol}&interval={interval}
+            
+```
+***   
+# Web Sockets
+ * **Market Trades**- wss://stream.binance.com:9443/ws/{symbol}@trade
+
+ * **WatchList**-wss://stream.binance.com:9443/ws/!miniTicker@arr
+
+***
+
+# Tech/Framework Used
+<a href="https://flask-restful.readthedocs.io/en/latest//"><img src="https://https://www.pngitem.com/pimgs/m/206-2066888_flask-restful-hd-png-download.png"/></a> &nbsp;<a href="https://pymongo.readthedocs.io/en/stable/tutorial.html"> <img src="https://1000logos.net/wp-content/uploads/2020/08/MongoDB-Emblem.jpg></a>
+ ### Other Technologies Used 
+  * [Pymongo](https://pymongo.readthedocs.io/en/stable/tutorial.html)
+  * [Postman](https://www.postman.com/)
+
+***
+# Databases
+<a href="https://docs.mongodb.com/"><img src="https://webassets.mongodb.com/_com_assets/cms/MongoDB_Logo_FullColorBlack_RGB-4td3yuxzjs.png"/></a> &nbsp;<a href="https://redislabs.com/lp/python-redis/"> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQfY4oW9fnv3DmNiKU7DXeaSKgeyUYboJtCl178P9NlnnXnVINrhjJxtLp9-YDuODRuA0&usqp=CAU></a>
+
+***
+
+# Contributors
+* [**Daksh Verma** ](https://github.com/dakshverma2411/ "Connect on Github")
+* [**Jaskaran Singh** ](https://github.com/jaskaran-23 "Connect on Github")
+* [**Tanveer Sodhi** ](https://github.com/TanveerSodhi "Connect on Github")
+* [**Aseem Mangla** ](https://github.com/manglaaseem28 "Connect on Github")
+
+
+
 
 
