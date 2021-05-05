@@ -31,8 +31,8 @@ cryptocurrency trading, the model will help them accordingly.
 * **Learn** - If users are not familiar about cryptotrading and other features
 or want to furnish their knowledge, we have a provided a platform to learn
 ***
-# Backend Endpoints
-* **’/register** ``` GET ```-  This api is used to register a new user along with the user's details in the form of a document in a collection of the User's database and does not allows same user to register twice, thus reducing redundancy.
+# Backend Endpoints and Response message
+* **’/register'** ``` GET ```-  This api is used to register a new user along with the user's details in the form of a document in a collection of the User's database and does not allows same user to register twice, thus reducing redundancy.
 ```
 {
 	“message”: “registered successfully”
